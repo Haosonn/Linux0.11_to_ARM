@@ -2,7 +2,7 @@ AR	=arm-linux-gnueabihf-ar
 AS	=arm-linux-gnueabihf-as
 CC	=arm-linux-gnueabihf-gcc
 LD	=arm-linux-gnueabihf-ld
-CFLAGS	=-Wall -fstrength-reduce -fomit-frame-pointer \
+CFLAGS	=-Wall -fstrength-reduce -fomit-frame-pointer -g \
 	 -nostdinc -I../include -nostdlib
 CPP	=arm-linux-gnueabihf-gcc -E -nostdinc -I../include
 

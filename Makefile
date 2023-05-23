@@ -4,13 +4,16 @@
 #
 RAMDISK =  #-DRAMDISK=512
 
+# 
+
 AS	=arm-linux-gnueabihf-as
 LD	=arm-linux-gnueabihf-ld
 LDFLAGS	=-Timx6ul.lds 
 CC	=arm-linux-gnueabihf-gcc  $(RAMDISK)
-CFLAGS	=-Wall -O2 -fomit-frame-pointer -nostdlib -fno-stack-protector
+CFLAGS	=-Wall -fomit-frame-pointer -nostdlib -fno-stack-protector -g
 
-CPP	=arm-linux-gnueabihf-cpp -nostdinc -Iinclude -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/7
+# QHX: 11 changed from 7
+CPP	=arm-linux-gnueabihf-cpp -nostdinc -Iinclude -lgcc -L/usr/lib/gcc-cross/arm-linux-gnueabihf/11 -g
 
 #
 # ROOT_DEV specifies the default root-device when making the image.
@@ -39,6 +42,7 @@ Image: boot/start tools/system
 	arm-linux-gnueabihf-objcopy -O binary -R .note -R .comment tools/system Image
 	sync
 
+
 disk: Image
 	dd bs=8192 if=Image of=/dev/fd0
 
@@ -46,14 +50,14 @@ mkimage:
 	cp Image download_tool
 	cd download_tool && ./mkimage.sh Image
 
-tools/system:	 init/main.o \
+tools/system:	 init/main.o boot/start.o \
 		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
-	$(LD) $(LDFLAGS) init/main.o \
+	$(LD) $(LDFLAGS) init/main.o boot/start.o \
 	$(ARCHIVES) \
 	$(DRIVERS) \
 	$(MATH) \
 	$(LIBS) \
-	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/9 > System.map 
+	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/11 > System.map 
 
 kernel/math/math.a:
 	(cd kernel/math; make)
@@ -81,6 +85,18 @@ lib/lib.a:
 
 boot/start:boot/start.S
 	$(AS) -o boot/start.o boot/start.S
+
+qemu: all
+	qemu-system-arm \
+		-machine virt \
+		-cpu cortex-a7 \
+		-nographic \
+		-m 4096M \
+		-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
+		-s -S
+		# -kernel Image \
+		# -append "console=ttyAMA0 mem=4096M@0xC0008000" \
+	    
 clean:
 	rm -f Image System.map tmp_make core
 	rm -f init/*.o tools/system boot/*.o

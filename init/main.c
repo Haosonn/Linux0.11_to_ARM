@@ -155,7 +155,6 @@ int main(void)
 {
 	unsigned char state = OFF;
 	int a=2 , b=10;
-    
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	//imx6u_clkinit();			/* 初始化系统时钟 			*/
 	//delay_init();				/* 初始化延时 			*/

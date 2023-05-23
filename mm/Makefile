@@ -1,5 +1,5 @@
 CC	=arm-linux-gnueabihf-gcc
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
+CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -g \
 	-finline-functions -nostdinc -I../include -nostdlib
 AS	=arm-linux-gnueabihf-as
 AR	=arm-linux-gnueabihf-ar
