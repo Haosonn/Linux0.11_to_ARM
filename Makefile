@@ -51,7 +51,8 @@ mkimage:
 	cd download_tool && ./mkimage.sh Image
 
 tools/system:	 init/main.o boot/start.o \
-		$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS)
+	$(ARCHIVES) $(DRIVERS) $(MATH) $(LIBS) 
+	mkdir -p tools
 	$(LD) $(LDFLAGS) init/main.o boot/start.o \
 	$(ARCHIVES) \
 	$(DRIVERS) \
