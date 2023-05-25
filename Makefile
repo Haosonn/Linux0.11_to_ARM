@@ -11,9 +11,9 @@ LD	=arm-linux-gnueabihf-ld
 NM  =arm-linux-gnueabihf-nm
 LDFLAGS	=-Timx6ul.lds 
 CC	=arm-linux-gnueabihf-gcc  $(RAMDISK)
-CFLAGS	=-Wall -fomit-frame-pointer -nostdlib -fno-stack-protector -g
+CFLAGS	=-Wall -nostdlib -g -nostdinc -fomit-frame-pointer
+# CFLAGS += -fomit-frame-pointer -fno-stack-protector 
 
-# QHX: 11 changed from 7
 CPP	=arm-linux-gnueabihf-cpp -nostdinc -Iinclude -lgcc -L/usr/lib/gcc-cross/arm-linux-gnueabihf/11 -g
 
 #
@@ -96,8 +96,8 @@ qemu: all
 		-cpu cortex-a7 \
 		-nographic \
 		-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
-		-s -S 
-		# -serial null -serial mon:stdio \
+		-s -S \
+		-serial mon:stdio 
 
 dtc:    
 	dtc -o qemu.dts -O dts -I dtb qemu.dtb

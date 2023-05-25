@@ -8,5 +8,4 @@ symbol-file tools/system
 layout asm
 layout split
 list
-b mmu_init
-
+b putc

@@ -38003,7 +38003,7 @@ typedef struct {
 
 
 /* UART - Peripheral instance base addresses */
-/** Peripheral UART1 base address */
+/** Peripheral UART1 base address 0x2020000 */
 #define UART1_BASE                               (0x2020000u)
 /** Peripheral UART1 base pointer */
 #define UART1                                    ((UART_Type *)UART1_BASE)

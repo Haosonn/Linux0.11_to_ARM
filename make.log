@@ -1,0 +1,201 @@
+arm-linux-gnueabihf-as -o boot/start.o boot/start.S
+arm-linux-gnueabihf-gcc   -Wall -fomit-frame-pointer -nostdlib -fno-stack-protector -g \
+-nostdinc -Iinclude -c -o init/main.o init/main.c
+(cd kernel; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel'
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o sched.o sched.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o system_call.o system_call.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o traps.o traps.c
+arm-linux-gnueabihf-as 		 -o asm.o asm.s
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o fork.o fork.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o panic.o panic.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o printk.o printk.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o vsprintf.o vsprintf.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o sys.o sys.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o exit.o exit.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o signal.o signal.c
+arm-linux-gnueabihf-gcc  	 -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -fno-stack-protector \
+-c -o mktime.o mktime.c
+arm-linux-gnueabihf-ld 		 -r -o kernel.o sched.o system_call.o traps.o asm.o fork.o panic.o printk.o vsprintf.o sys.o exit.o signal.o mktime.o
+sync
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel'
+(cd mm; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/mm'
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include -nostdlib \
+-c -o memory.o memory.c
+arm-linux-gnueabihf-as -o page.o page.s
+arm-linux-gnueabihf-ld -r -o mm.o memory.o page.o
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/mm'
+(cd fs; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs'
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o open.o open.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o read_write.o read_write.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o inode.o inode.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o file_table.o file_table.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o buffer.o buffer.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o super.o super.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o block_dev.o block_dev.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o char_dev.o char_dev.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o file_dev.o file_dev.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o stat.o stat.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o exec.o exec.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o pipe.o pipe.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o namei.o namei.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o bitmap.o bitmap.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o fcntl.o fcntl.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o ioctl.o ioctl.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib \
+-c -o truncate.o truncate.c
+arm-linux-gnueabihf-ld -r -o fs.o open.o read_write.o inode.o file_table.o buffer.o super.o block_dev.o char_dev.o file_dev.o stat.o exec.o pipe.o namei.o bitmap.o fcntl.o ioctl.o truncate.o
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs'
+(cd bsp; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp'
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_beep.o bsp_beep.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_clk.o bsp_clk.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_delay.o bsp_delay.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_epittimer.o bsp_epittimer.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_exit.o bsp_exit.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_gpio.o bsp_gpio.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_int.o bsp_int.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_led.o bsp_led.c
+arm-linux-gnueabihf-gcc -Wall -fstrength-reduce -fomit-frame-pointer -g -nostdinc -I../include -nostdlib  \
+-c -o bsp_uart.o bsp_uart.c
+arm-linux-gnueabihf-ld -r -o bsp.o bsp_beep.o bsp_clk.o bsp_delay.o bsp_epittimer.o bsp_exit.o bsp_gpio.o bsp_int.o bsp_led.o bsp_uart.o
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp'
+(cd kernel/blk_drv; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv'
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/7 \
+-c -o ll_rw_blk.o ll_rw_blk.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/7 \
+-c -o floppy.o floppy.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/7 \
+-c -o hd.o hd.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/7 \
+-c -o ramdisk.o ramdisk.c
+arm-linux-gnueabihf-ar crv blk_drv.a ll_rw_blk.o floppy.o hd.o ramdisk.o
+a - ll_rw_blk.o
+a - floppy.o
+a - hd.o
+a - ramdisk.o
+sync
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv'
+(cd kernel/chr_drv; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv'
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -nostdlib \
+-c -o tty_io.o tty_io.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -nostdlib \
+-c -o console.o console.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -nostdlib \
+-c -o serial.o serial.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include -nostdlib \
+-c -o tty_ioctl.o tty_ioctl.c
+arm-linux-gnueabihf-ar crv chr_drv.a tty_io.o console.o serial.o tty_ioctl.o
+a - tty_io.o
+a - console.o
+a - serial.o
+a - tty_ioctl.o
+sync
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv'
+(cd kernel/math; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/math'
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -I../../include \
+-c -o math_emulate.o math_emulate.c
+arm-linux-gnueabihf-ar crv math.a math_emulate.o
+a - math_emulate.o
+sync
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/math'
+(cd lib; make)
+make[1]: Entering directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib'
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o ctype.o ctype.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o _exit.o _exit.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o open.o open.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o close.o close.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o errno.o errno.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o write.o write.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o dup.o dup.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o setsid.o setsid.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o execve.o execve.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o wait.o wait.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o string.o string.c
+arm-linux-gnueabihf-gcc -Wall -O -fstrength-reduce -fomit-frame-pointer -g -finline-functions -nostdinc -I../include \
+-c -o malloc.o malloc.c
+arm-linux-gnueabihf-ar crv lib.a ctype.o _exit.o open.o close.o errno.o write.o dup.o setsid.o execve.o wait.o string.o malloc.o
+a - ctype.o
+a - _exit.o
+a - open.o
+a - close.o
+a - errno.o
+a - write.o
+a - dup.o
+a - setsid.o
+a - execve.o
+a - wait.o
+a - string.o
+a - malloc.o
+sync
+make[1]: Leaving directory '/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib'
+mkdir -p tools
+arm-linux-gnueabihf-ld -Timx6ul.lds  init/main.o boot/start.o \
+kernel/kernel.o mm/mm.o fs/fs.o bsp/bsp.o \
+kernel/blk_drv/blk_drv.a kernel/chr_drv/chr_drv.a \
+kernel/math/math.a \
+lib/lib.a \
+-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/11 
+arm-linux-gnueabihf-nm -n tools/system > System.map
+arm-linux-gnueabihf-objcopy -O binary -R .note -R .comment tools/system Image
+sync
+qemu-system-arm \
+	-machine virt,gic-version=3 \
+	-m 4G \
+	-cpu cortex-a7 \
+	-nographic \
+	-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
+	-s -S 
+QEMU: Terminated
+# -serial null -serial mon:stdio \
+

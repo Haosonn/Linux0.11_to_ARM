@@ -60,7 +60,6 @@ stack_top:
 
 /* 复位中断 */	
 Reset_Handler:
-
 	cpsid i						/* 关闭全局中断 */
 
 	/* 关闭I,DCache和MMU 
@@ -134,12 +133,23 @@ Reset_Handler:
    mov r2,r5
    ldr r3,=0x1
    bl  create_page_table               @ 设置页表
+
    @映射led寄存器地址
    ldr r0,=0x02000000
    ldr r1,=0x03000000
    ldr r2,=0x02000000
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
+
+   @映射uart寄存器地址
+   ldr r0,=0x09000000
+   ldr r1,=0x09010000
+   ldr r2,=0x09000000
+   ldr r3,=0x0
+   bl  create_page_table               @ 设置页表
+
+
+
    @映射led测试地址
    ldr r0,=0x0B000000
    ldr r1,=0x0B000000
@@ -158,6 +168,13 @@ Reset_Handler:
    ldr r0,=0xA00000
    ldr r1,=0xA00000
    ldr r2,=0xA00000
+   ldr r3,=0x0
+   bl  create_page_table               @ 设置页表
+
+   @映射
+   ldr r0,=0x30000000
+   ldr r1,=0x40000000
+   ldr r2,=0x30000000
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
