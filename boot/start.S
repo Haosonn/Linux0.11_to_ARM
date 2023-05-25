@@ -95,6 +95,7 @@ Reset_Handler:
     mvn r8, r7
 
     ldr r6, =stack_start
+	ldr r6, [r6]
 	and r6, r8
 	add r6, #0xC0000000
 	mov sp, r6
@@ -146,6 +147,13 @@ Reset_Handler:
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
+   @映射GIC
+   ldr r0,=0x08000000
+   ldr r1,=0x08200000
+   ldr r2,=0x08000000
+   ldr r3,=0x0
+   bl  create_page_table               @ 设置页表
+
    @映射中断向量表基地址，避免开启mmu后无法使用中断
    ldr r0,=0xA00000
    ldr r1,=0xA00000
@@ -162,6 +170,7 @@ __turn_mmu_on_end:
    mvn r8, r7
 
     ldr r6, =stack_start
+	ldr r6, [r6]
 
     cpsid i
 	/* 进入IRQ模式 */
@@ -185,6 +194,10 @@ __turn_mmu_on_end:
 	mrs r0, cpsr		/* 读取cpsr寄存器值到r0中 			*/
 	bic r0, r0, #0x80	/* 将r0寄存器中bit7清零，也就是CPSR中的I位清零，表示允许IRQ中断 */
 	msr cpsr, r0		/* 将r0重新写入到cpsr中 			*/
+
+	cpsid i
+	cpsid f
+	cpsid a
 
     bl main
 
@@ -217,6 +230,7 @@ PrefAbort_Handler:
 /* 数据终止中断 */
 DataAbort_Handler:
 	ldr r0, =DataAbort_Handler
+	mrc p15, 0, r1, c5, c0, 0
 	bx r0
 
 /* 未使用的中断 */
@@ -298,3 +312,4 @@ __turn_mmu_on_loc:
 	.long	.
 	.long	__turn_mmu_on
 	.long	__turn_mmu_on_end
+

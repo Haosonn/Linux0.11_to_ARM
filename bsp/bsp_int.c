@@ -25,7 +25,7 @@ void int_init(void)
 {
 	GIC_Init(); 						/* 初始化GIC 							*/
 	system_irqtable_init();				/* 初始化中断表 							*/
-	__set_VBAR((uint32_t)0xC0008000); 	/* 中断向量表偏移，偏移到起始地址   				*/
+    __set_VBAR((uint32_t)0xC0008000); 	/* 中断向量表偏移，偏移到起始地址   				*/
 }
 
 /*

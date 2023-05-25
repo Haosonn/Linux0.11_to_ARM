@@ -8,6 +8,7 @@ RAMDISK =  #-DRAMDISK=512
 
 AS	=arm-linux-gnueabihf-as
 LD	=arm-linux-gnueabihf-ld
+NM  =arm-linux-gnueabihf-nm
 LDFLAGS	=-Timx6ul.lds 
 CC	=arm-linux-gnueabihf-gcc  $(RAMDISK)
 CFLAGS	=-Wall -fomit-frame-pointer -nostdlib -fno-stack-protector -g
@@ -58,7 +59,8 @@ tools/system:	 init/main.o boot/start.o \
 	$(DRIVERS) \
 	$(MATH) \
 	$(LIBS) \
-	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/11 > System.map 
+	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/11 
+	$(NM) -n tools/system > System.map
 
 kernel/math/math.a:
 	(cd kernel/math; make)
@@ -89,15 +91,19 @@ boot/start:boot/start.S
 
 qemu: all
 	qemu-system-arm \
-		-machine virt \
+		-machine virt,gic-version=3 \
+		-m 4G \
 		-cpu cortex-a7 \
 		-nographic \
-		-m 4096M \
 		-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
-		-s -S
-		# -kernel Image \
-		# -append "console=ttyAMA0 mem=4096M@0xC0008000" \
-	    
+		-s -S 
+		# -serial null -serial mon:stdio \
+
+dtc:    
+	dtc -o qemu.dts -O dts -I dtb qemu.dtb
+		# -machine dumpdtb=qemu.dtb 
+		# -machine mcimx6ul-evk 
+
 clean:
 	rm -f Image System.map tmp_make core
 	rm -f init/*.o tools/system boot/*.o

@@ -11,7 +11,7 @@ AS	=arm-linux-gnueabihf-ld
 LD	=arm-linux-gnueabihf-ld
 LDFLAGS	=-s -x
 CC	=arm-linux-gnueabihf-gcc
-CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer \
+CFLAGS	=-Wall -O -fstrength-reduce -fomit-frame-pointer -g\
 	-finline-functions -nostdinc -I../include
 CPP	=arm-linux-gnueabihf-gcc -E -nostdinc -I../include
 
