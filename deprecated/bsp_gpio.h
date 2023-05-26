@@ -1,7 +1,7 @@
 #ifndef _BSP_GPIO_H
 #define _BSP_GPIO_H
 #define _BSP_KEY_H
-#include "imx6ul.h"
+#include "virt.h"
 /***************************************************************
 Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 文件名	: 	 bsp_gpio.h
@@ -15,6 +15,18 @@ Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 	 	 添加GPIO中断相关定义
 
 ***************************************************************/
+
+/** GPIO - Register Layout Typedef */
+typedef struct {
+  __IO uint32_t DR;                                /**< GPIO data register, offset: 0x0 */
+  __IO uint32_t GDIR;                              /**< GPIO direction register, offset: 0x4 */
+  __I  uint32_t PSR;                               /**< GPIO pad status register, offset: 0x8 */
+  __IO uint32_t ICR1;                              /**< GPIO interrupt configuration register1, offset: 0xC */
+  __IO uint32_t ICR2;                              /**< GPIO interrupt configuration register2, offset: 0x10 */
+  __IO uint32_t IMR;                               /**< GPIO interrupt mask register, offset: 0x14 */
+  __IO uint32_t ISR;                               /**< GPIO interrupt status register, offset: 0x18 */
+  __IO uint32_t EDGE_SEL;                          /**< GPIO edge select register, offset: 0x1C */
+} GPIO_Type;
 
 /* 
  * 枚举类型和结构体定义 

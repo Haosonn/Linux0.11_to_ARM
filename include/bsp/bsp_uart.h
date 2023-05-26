@@ -1,6 +1,6 @@
 #ifndef _BSP_UART_H
 #define _BSP_UART_H
-#include "imx6ul.h"
+#include "virt.h"
 
 #define _R volatile
 #define _RW volatile

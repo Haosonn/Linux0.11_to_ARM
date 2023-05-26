@@ -1,4 +1,5 @@
 #include "bsp/bsp_int.h"
+#include "bsp/core_ca7.h"
 /***************************************************************
 Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 文件名	: 	 bsp_int.c

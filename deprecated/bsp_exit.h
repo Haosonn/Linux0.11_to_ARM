@@ -10,7 +10,7 @@ Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 论坛 	   : www.openedv.com
 日志	   : 初版V1.0 2019/1/4 左忠凯创建
 ***************************************************************/
-#include "imx6ul.h"
+#include "virt.h"
 
 /* 函数声明 */
 void exit_init(void);						/* 中断初始化 */

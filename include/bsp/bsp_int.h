@@ -1,6 +1,6 @@
 #ifndef _BSP_INT_H
 #define _BSP_INT_H
-#include "imx6ul.h"
+#include "virt.h"
 /***************************************************************
 Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 文件名	: 	 bsp_int.c

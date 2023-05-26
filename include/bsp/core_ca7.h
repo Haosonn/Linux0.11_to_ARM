@@ -24,14 +24,14 @@ Copyright © zuozhongkai Co., Ltd. 1998-2019. All rights reserved.
 #define     __IOM    volatile            /* 读写 */
 #define __STRINGIFY(x) #x
 
-/* C语言实现MCR指令 */
+#define __GIC_PRIO_BITS                5         /**< Number of Bits used for Priority Levels */
+
 #define __MCR(coproc, opcode_1, src, CRn, CRm, opcode_2)                          \
     __ASM volatile ("MCR " __STRINGIFY(p##coproc) ", " __STRINGIFY(opcode_1) ", " \
                     "%0, " __STRINGIFY(c##CRn) ", " __STRINGIFY(c##CRm) ", "      \
                     __STRINGIFY(opcode_2)                                         \
                     : : "r" (src) )
 
-/* C语言实现MRC指令 */                    
 #define __MRC(coproc, opcode_1, CRn, CRm, opcode_2)                               \
   ({                                                                              \
     uint32_t __dst;                                                               \

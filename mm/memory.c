@@ -781,8 +781,6 @@ void mmu_init(void)
 {
     unsigned long ttb = PAGE_TABLE_ADDR;
     
-// ARM休系架构与编程
-// 嵌入汇编：LINUX内核完全注释
 __asm__(
     "mov    r4, %0\n"                   /* r4 = 页表基址 */
     "mcr    p15, 0, r4, c2, c0, 0\n"    /* 设置页表基址寄存器 */

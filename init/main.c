@@ -14,13 +14,8 @@
 #include <unistd.h>
 #include <time.h>       // 时间类型头文件。其中主要定义了tm结构和一些有关时间的函数原型
 
-#include "bsp/bsp_clk.h"
-#include "bsp/bsp_delay.h"
-#include "bsp/bsp_led.h"
-#include "bsp/bsp_beep.h"
 #include "bsp/bsp_int.h"
 #include "bsp/bsp_uart.h"
-#include "bsp/bsp_exit.h"
 
 /*
  * we need this inline - forking from kernel space will result
@@ -154,25 +149,10 @@ struct drive_info { char dummy[32]; } drive_info;  // 用于存放硬盘参数�
 int main(void)
 {
 	unsigned char state = OFF;
+	char *str = "Hello, OS kernel!\n\r";
 	int a=2 , b=10;
     int_init(); 				/* 初始化中断(一定要最先调用！) */
-	clk_enable();				/* 使能所有的时钟 			*/
-	led_init();					/* 初始化led 			*/
-	//TIDO:remove
-    //beep_init();				/* 初始化beep	 		*/
-    exit_init();
 	uart_init();				/* 初始化串口，波特率115200 */
-    //led_switch(LED0,1);
-   //open("/etc/rc", 1, 2);
-   // close("/etc/rc", 1, 3);
-    printk("\r\n输入两个整数，使用空格隔开:");
-	while(1)					
-	{	
-		
-		state = !state;
-		led_switch(LED0,0);
-	}
-
 	return 0;
 }
 
