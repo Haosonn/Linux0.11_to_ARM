@@ -8,4 +8,6 @@ symbol-file tools/system
 layout asm
 layout split
 list
+b Reset_Handler
+c
 b putc

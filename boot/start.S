@@ -73,16 +73,13 @@ Reset_Handler:
     bic     r0,  r0, #0x1             /* 清除C1寄存器的bit0(M位)，关闭MMU				       	*/
     mcr     p15, 0, r0, c1, c0, 0     /* 将r0寄存器中的值写入到CP15的C1寄存器中	 				*/
 
-#if 0	
 	/* 汇编版本设置中断向量表偏移 */
 	ldr r0, =0X87800000
-
 	dsb
 	isb
 	mcr p15, 0, r0, c12, c0, 0
 	dsb
 	isb
-#endif
 
 	/* 设置各个模式下的栈指针，
 	 * 注意：IMX6UL的堆栈是向下增长的！
@@ -96,7 +93,6 @@ Reset_Handler:
     ldr r6, =stack_start
 	ldr r6, [r6]
 	and r6, r8
-	add r6, #0xC0000000
 	mov sp, r6
 
 	/* 进入SYS模式 */
@@ -114,14 +110,6 @@ Reset_Handler:
    @清除16kb页表地址
    bl clean_page_table
 
-   @ 映射内核地址
-   ldr r0,=__text_start
-   ldr r1,=__bss_end
-   ldr r2,=0x80000000
-   ldr r3,=0x1
-   bl  create_page_table               @ 设置页表
-
-
    adr	r0, __turn_mmu_on_loc
    ldmia r0, {r3, r5, r6}	
    sub	r0, r0, r3			@ virt->phys offset
@@ -134,13 +122,6 @@ Reset_Handler:
    ldr r3,=0x1
    bl  create_page_table               @ 设置页表
 
-   @映射led寄存器地址
-   ldr r0,=0x02000000
-   ldr r1,=0x03000000
-   ldr r2,=0x02000000
-   ldr r3,=0x0
-   bl  create_page_table               @ 设置页表
-
    @映射uart寄存器地址
    ldr r0,=0x09000000
    ldr r1,=0x09010000
@@ -148,33 +129,10 @@ Reset_Handler:
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
-
-
-   @映射led测试地址
-   ldr r0,=0x0B000000
-   ldr r1,=0x0B000000
-   ldr r2,=0x02000000
-   ldr r3,=0x0
-   bl  create_page_table               @ 设置页表
-
    @映射GIC
    ldr r0,=0x08000000
    ldr r1,=0x08200000
    ldr r2,=0x08000000
-   ldr r3,=0x0
-   bl  create_page_table               @ 设置页表
-
-   @映射中断向量表基地址，避免开启mmu后无法使用中断
-   ldr r0,=0xA00000
-   ldr r1,=0xA00000
-   ldr r2,=0xA00000
-   ldr r3,=0x0
-   bl  create_page_table               @ 设置页表
-
-   @映射
-   ldr r0,=0x30000000
-   ldr r1,=0x40000000
-   ldr r2,=0x30000000
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
@@ -247,7 +205,6 @@ PrefAbort_Handler:
 /* 数据终止中断 */
 DataAbort_Handler:
 	ldr r0, =DataAbort_Handler
-	mrc p15, 0, r1, c5, c0, 0
 	bx r0
 
 /* 未使用的中断 */
@@ -277,7 +234,6 @@ IRQ_Handler:
 	push {r0, r3}				/* 保存r0,r1 */
 
 	ldr r2, =system_irqhandler	/* 加载C语言中断处理函数到r2寄存器中*/
-	bl led_on
 	blx r2						/* 运行C语言中断处理函数，带有一个参数，保存在R0寄存器中 */
 
 	pop {r0, r3}				
@@ -296,34 +252,6 @@ FIQ_Handler:
 
 	ldr r0, =FIQ_Handler	
 	bx r0									
-
-led_on:
-	@ 使能GPIO时钟
-	ldr r0,=0xB0c406c
-	ldr r1,=0xffffffff
-	str r1,[r0]
-
-	@ 设置引脚复用为GPIO
-	ldr r0,=0xB0e006c
-	ldr  r1,=5
-	str r1,[r0]
-
-
-	@ 设置引脚属性(上下拉、速率、驱动能力)
-	ldr r0,=0xB0e02f8
-	ldr  r1,=0x10b0
-	str r1,[r0]
-
-	@ 控制GPIO引脚输出高低电平
-	ldr r0,=0x0B09c004
-	ldr  r1,=16
-	str r1,[r0]
-
-	ldr r0,=0x0B09c000
-	ldr  r1,=0
-	str r1,[r0]
-
-	mov pc, lr
 
 __turn_mmu_on_loc:
 	.long	.

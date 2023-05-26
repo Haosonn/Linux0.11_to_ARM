@@ -1,5 +1,13 @@
 {
     "files.associations": {
-        "imx6ul.h": "c"
+        "imx6ul.h": "c",
+        "unistd.h": "c",
+        "fcntl.h": "c",
+        "types.h": "c",
+        "features.h": "c",
+        "tty.h": "c",
+        "sched.h": "c",
+        "io.h": "c",
+        "stddef.h": "c"
     }
 }

@@ -149,7 +149,6 @@ struct drive_info { char dummy[32]; } drive_info;  // 用于存放硬盘参数�
 int main(void)
 {
 	unsigned char state = OFF;
-	char *str = "Hello, OS kernel!\n\r";
 	int a=2 , b=10;
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	uart_init();				/* 初始化串口，波特率115200 */

@@ -9,7 +9,7 @@ RAMDISK =  #-DRAMDISK=512
 AS	=arm-linux-gnueabihf-as
 LD	=arm-linux-gnueabihf-ld
 NM  =arm-linux-gnueabihf-nm
-LDFLAGS	=-Timx6ul.lds 
+LDFLAGS	=-Tvirt.lds 
 CC	=arm-linux-gnueabihf-gcc  $(RAMDISK)
 CFLAGS	=-Wall -nostdlib -g -nostdinc -fomit-frame-pointer
 # CFLAGS += -fomit-frame-pointer -fno-stack-protector 
@@ -28,12 +28,12 @@ DRIVERS =kernel/blk_drv/blk_drv.a kernel/chr_drv/chr_drv.a
 MATH	=kernel/math/math.a
 LIBS	=lib/lib.a
 
-.c.s:
+.c.s: $*
 	$(CC) $(CFLAGS) \
 	-nostdinc -Iinclude -S -o $*.s $<
-.s.o:
+.s.o: $* 
 	$(AS)  -o $*.o $<
-.c.o:
+.c.o: $*
 	$(CC) $(CFLAGS) \
 	-nostdinc -Iinclude -c -o $*.o $<
 
@@ -89,16 +89,25 @@ lib/lib.a:
 boot/start:boot/start.S
 	$(AS) -o boot/start.o boot/start.S
 
+# qemu: all
+# 	qemu-system-arm \
+# 		-machine virt,gic-version=3 \
+# 		-m 4G \
+# 		-cpu cortex-a7 \
+# 		-nographic \
+# 		-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
+# 		-s -S \
+# 		-serial mon:stdio 
+
 qemu: all
 	qemu-system-arm \
 		-machine virt,gic-version=3 \
-		-m 4G \
+		-m 3G \
 		-cpu cortex-a7 \
 		-nographic \
-		-device loader,file=Image,addr=0xC0008000,cpu-num=0 \
+		-kernel Image \
 		-s -S \
 		-serial mon:stdio 
-
 dtc:    
 	dtc -o qemu.dts -O dts -I dtb qemu.dtb
 		# -machine dumpdtb=qemu.dtb 

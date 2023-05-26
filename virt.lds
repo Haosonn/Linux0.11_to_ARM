@@ -1,5 +1,5 @@
 SECTIONS{
-	. = 0xC0008000;
+	. = 0x40010000;
 	__text_start = .;
 	.text :
 	{

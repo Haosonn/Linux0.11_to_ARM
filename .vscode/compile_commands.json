@@ -1,0 +1,925 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-fomit-frame-pointer",
+      "-nostdinc",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "init/main.o",
+      "init/main.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/init/main.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/init/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "sched.o",
+      "sched.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/sched.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/sched.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "system_call.o",
+      "system_call.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/system_call.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/system_call.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "traps.o",
+      "traps.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/traps.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/traps.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "fork.o",
+      "fork.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/fork.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/fork.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "panic.o",
+      "panic.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/panic.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/panic.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "printk.o",
+      "printk.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/printk.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/printk.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "vsprintf.o",
+      "vsprintf.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/vsprintf.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/vsprintf.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "sys.o",
+      "sys.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/sys.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/sys.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "exit.o",
+      "exit.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/exit.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/exit.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "signal.o",
+      "signal.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/signal.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/signal.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "mktime.o",
+      "mktime.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/mktime.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/mktime.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-g",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../include",
+      "-c",
+      "-o",
+      "memory.o",
+      "memory.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/mm",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/mm/memory.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/mm/memory.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "open.o",
+      "open.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/open.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/open.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "read_write.o",
+      "read_write.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/read_write.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/read_write.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "inode.o",
+      "inode.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/inode.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/inode.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "file_table.o",
+      "file_table.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/file_table.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/file_table.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "buffer.o",
+      "buffer.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/buffer.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/buffer.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "super.o",
+      "super.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/super.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/super.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "block_dev.o",
+      "block_dev.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/block_dev.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/block_dev.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "char_dev.o",
+      "char_dev.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/char_dev.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/char_dev.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "file_dev.o",
+      "file_dev.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/file_dev.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/file_dev.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "stat.o",
+      "stat.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/stat.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/stat.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "exec.o",
+      "exec.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/exec.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/exec.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "pipe.o",
+      "pipe.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/pipe.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/pipe.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "namei.o",
+      "namei.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/namei.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/namei.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "bitmap.o",
+      "bitmap.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/bitmap.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/bitmap.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "fcntl.o",
+      "fcntl.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/fcntl.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/fcntl.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "ioctl.o",
+      "ioctl.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/ioctl.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/ioctl.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "truncate.o",
+      "truncate.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/truncate.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/fs/truncate.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "bsp_int.o",
+      "bsp_int.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp/bsp_int.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp/bsp_int.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "bsp_uart.o",
+      "bsp_uart.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp/bsp_uart.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/bsp/bsp_uart.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "ll_rw_blk.o",
+      "ll_rw_blk.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/ll_rw_blk.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/ll_rw_blk.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "floppy.o",
+      "floppy.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/floppy.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/floppy.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "hd.o",
+      "hd.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/hd.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/hd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "ramdisk.o",
+      "ramdisk.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/ramdisk.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/blk_drv/ramdisk.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "tty_io.o",
+      "tty_io.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/tty_io.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/tty_io.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "console.o",
+      "console.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/console.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/console.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "serial.o",
+      "serial.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/serial.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/serial.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "tty_ioctl.o",
+      "tty_ioctl.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/tty_ioctl.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/chr_drv/tty_ioctl.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-O",
+      "-fstrength-reduce",
+      "-fomit-frame-pointer",
+      "-finline-functions",
+      "-nostdinc",
+      "-I../../include",
+      "-c",
+      "-o",
+      "math_emulate.o",
+      "math_emulate.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/math",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/math/math_emulate.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/kernel/math/math_emulate.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "ctype.o",
+      "ctype.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/ctype.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/ctype.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "_exit.o",
+      "_exit.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/_exit.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/_exit.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "open.o",
+      "open.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/open.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/open.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "close.o",
+      "close.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/close.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/close.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "errno.o",
+      "errno.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/errno.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/errno.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "write.o",
+      "write.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/write.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/write.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "dup.o",
+      "dup.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/dup.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/dup.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "setsid.o",
+      "setsid.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/setsid.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/setsid.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "execve.o",
+      "execve.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/execve.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/execve.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "wait.o",
+      "wait.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/wait.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/wait.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "string.o",
+      "string.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/string.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/string.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/arm-linux-gnueabihf-gcc",
+      "-Wall",
+      "-g",
+      "-nostdinc",
+      "-I../include",
+      "-fomit-frame-pointer",
+      "-c",
+      "-o",
+      "malloc.o",
+      "malloc.c"
+    ],
+    "directory": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib",
+    "file": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/malloc.c",
+    "output": "/mnt/d/Sustech/2023 Spring/CS334 OS/Project/Linux_ARM/lib/malloc.o"
+  }
+]

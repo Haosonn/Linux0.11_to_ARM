@@ -12,16 +12,16 @@ void uart_init(void)
 
 	uart_enable(UART);
 
-    // puts("WYYMYWIFE");
-    putc('W');
-    putc('Y');
-    putc('Y');
-    putc('M');
-    putc('Y');
-    putc('W');
-    putc('I');
-    putc('F');
-    putc('E');
+    puts("WYYMYWIFE");
+    // putc('W');
+    // putc('Y');
+    // putc('Y');
+    // putc('M');
+    // putc('Y');
+    // putc('W');
+    // putc('I');
+    // putc('F');
+    // putc('E');
 }
 
 void uart_disable(UART_T *base)

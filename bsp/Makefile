@@ -6,13 +6,13 @@ CFLAGS	=-Wall  -g -nostdinc -I../include -nostdlib -fomit-frame-pointer
 # CFLAGS += -fstrength-reduce -fomit-frame-pointer
 CPP	=arm-linux-gnueabihf-gcc -E -nostdinc -I../include -g
 
-.c.s:
+.c.s: $*
 	$(CC) $(CFLAGS) \
 	-S -o $*.s $<
-.c.o:
+.c.o: $*
 	$(CC) $(CFLAGS) \
 	-c -o $*.o $<
-.s.o:
+.s.o: $*
 	$(AS) -o $*.o $<
 
 OBJS= bsp_int.o bsp_uart.o
