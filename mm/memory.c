@@ -92,7 +92,9 @@ static unsigned char mem_map [ PAGING_PAGES ] = {0,};
 // 因为内核代码和数据空间（16MB）已经对等地映射到物理地址空间。
 unsigned long get_free_page(void)
 {
-return 1;           // 返回空闲物理页面地址(若无空闲页面则返回0).
+    //TODO 
+    //NEEDED IMPLEMENT
+    return 1;           // 返回空闲物理页面地址(若无空闲页面则返回0).
 }
 
 /*

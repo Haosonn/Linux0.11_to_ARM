@@ -146,14 +146,19 @@ static long main_memory_start = 0;              // 主内存（将用于分页�
 
 struct drive_info { char dummy[32]; } drive_info;  // 用于存放硬盘参数表信息
 
+void breakpoint() {
+	int a = 0;
+}
 int main(void)
 {
 	unsigned char state = OFF;
 	int a=2 , b=10;
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	uart_init();				/* 初始化串口，波特率115200 */
+	breakpoint();
 	return 0;
 }
+
 
 // 内核初始化主程序。初始化结束后将以任务0（idle任务即空闲任务）的身份运行。
 void main_1(void)		/* This really IS void, no error here. */

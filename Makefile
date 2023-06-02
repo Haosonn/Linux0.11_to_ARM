@@ -106,8 +106,9 @@ qemu: all
 		-cpu cortex-a7 \
 		-nographic \
 		-kernel Image \
-		-s -S \
-		-serial mon:stdio 
+		-serial mon:stdio \
+		-append "console=ttyAMA1 root=/dev/vda rw" \
+		-s -S
 dtc:    
 	dtc -o qemu.dts -O dts -I dtb qemu.dtb
 		# -machine dumpdtb=qemu.dtb 

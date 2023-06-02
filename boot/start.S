@@ -73,13 +73,6 @@ Reset_Handler:
     bic     r0,  r0, #0x1             /* 清除C1寄存器的bit0(M位)，关闭MMU				       	*/
     mcr     p15, 0, r0, c1, c0, 0     /* 将r0寄存器中的值写入到CP15的C1寄存器中	 				*/
 
-	/* 汇编版本设置中断向量表偏移 */
-	ldr r0, =0X87800000
-	dsb
-	isb
-	mcr p15, 0, r0, c12, c0, 0
-	dsb
-	isb
 
 	/* 设置各个模式下的栈指针，
 	 * 注意：IMX6UL的堆栈是向下增长的！
@@ -126,6 +119,13 @@ Reset_Handler:
    ldr r0,=0x09000000
    ldr r1,=0x09010000
    ldr r2,=0x09000000
+   ldr r3,=0x0
+   bl  create_page_table               @ 设置页表
+
+   @映射页表地址
+   ldr r0,=0x80004000
+   ldr r1,=0x80005000
+   ldr r2,=0x80004000
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
