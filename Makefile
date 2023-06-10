@@ -109,6 +109,15 @@ qemu: all
 		-serial mon:stdio \
 		-append "console=ttyAMA1 root=/dev/vda rw" \
 		-s -S
+
+gdb: all
+	gdb-multiarch -x init.gdb
+
+tmux:
+	tmux new-session -d -s Linux_ARM -n qemu 'make qemu'
+	tmux new-window -t Linux_ARM:2 -n gdb 'make gdb'
+	tmux attach -t Linux_ARM
+
 dtc:    
 	dtc -o qemu.dts -O dts -I dtb qemu.dtb
 		# -machine dumpdtb=qemu.dtb 

@@ -735,7 +735,7 @@ void calc_mem(void)
                              MMU_CACHEABLE | MMU_BUFFERABLE | MMU_SECTION)
 #define MMU_SECTION_SIZE    0x00100000
 
-#define PAGE_TABLE_ADDR (0x80008000 - 0x4000)
+#define PAGE_TABLE_ADDR     0x40020000
 
 /*
  * 设置页表
