@@ -37,7 +37,7 @@ sys_setreuid,sys_setregid };
 
 const void *system_call(int number)
 {
-     fn_ptr func = NULL;
+    fn_ptr func = NULL;
     //printk("system_call:%d %d %d %d!!\r\n",number,sizeof(sys_call_table),sizeof(sys_call_table[0]),sizeof(sys_call_table)/sizeof(sys_call_table[0]));
     if (number < sizeof(sys_call_table)/sizeof(sys_call_table[0]))
     {

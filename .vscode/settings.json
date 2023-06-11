@@ -8,6 +8,10 @@
         "tty.h": "c",
         "sched.h": "c",
         "io.h": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "stat.h": "c",
+        "times.h": "c",
+        "utsname.h": "c",
+        "utime.h": "c"
     }
 }

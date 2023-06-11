@@ -13,15 +13,15 @@ Copyright © laoyening Co., Ltd. 1998-2019. All rights reserved.
 .equ SYS_MOD,0x1f
 .equ IRQ_MOD,0x12
 .equ FIQ_MOD,0x11
-.equ SVC_MOD,0x13
+.equ SWI_MOD,0x13
 .equ ABT_MOD,0x17
 .equ UND_MOD,0x1b
 .equ MOD_MASK,0x1f
 
 .global _start  				/* 全局标号 */
 
-.macro CHANGE_TO_SVC
-        msr     cpsr_c,#(SVC_MOD)
+.macro CHANGE_TO_SWI
+        msr     cpsr_c,#(SWI_MOD)
 .endm
 
 .macro CHANGE_TO_IRQ
@@ -41,19 +41,19 @@ Copyright © laoyening Co., Ltd. 1998-2019. All rights reserved.
 _start:
 	bl Reset_Handler		/* 复位中断 					*/	
 	ldr pc, =Undefined_Handler	/* 未定义中断 					*/
-	ldr pc, =SVC_Handler		/* SVC(Supervisor)中断 		*/
+	ldr pc, =SWI_Handler		/* SWI(Software interrupt)中断 		*/
 	ldr pc, =PrefAbort_Handler	/* 预取终止中断 					*/
 	ldr pc, =DataAbort_Handler	/* 数据终止中断 					*/
 	ldr	pc, =NotUsed_Handler	/* 未使用中断					*/
 	ldr pc, =IRQ_Handler		/* IRQ中断 					*/
 	ldr pc, =FIQ_Handler		/* FIQ(快速中断)未定义中断 			*/
 
-.equ SVC_Stack_Size,     0x00000100
+.equ SWI_Stack_Size,  0x00000100
 .equ IRQ_STACK_Size,  0x00000800
 
 .align 4
 stack_begin:
-.rept (SVC_Stack_Size + IRQ_STACK_Size)
+.rept (SWI_Stack_Size + IRQ_STACK_Size)
 .byte 0
 .endr
 stack_top:
@@ -153,8 +153,8 @@ __turn_mmu_on_end:
 	CHANGE_TO_IRQ
 	mov sp, r0
 
-	/* 进入SVC模式 */
-	CHANGE_TO_SVC
+	/* 进入SWI模式 */
+	CHANGE_TO_SWI
 	sub r0, r0,#IRQ_STACK_Size
 	mov sp, r0
 
@@ -181,8 +181,8 @@ Undefined_Handler:
 	ldr r0, =Undefined_Handler
 	bx r0
 
-/* SVC中断 */
-SVC_Handler:
+/* SWI中断 */
+SWI_Handler:
 	stmdb sp!, {r0-r12,lr}
 	CHANGE_TO_SYS
 	push {r0 - r3, r12}
@@ -191,7 +191,6 @@ SVC_Handler:
 	mov r6,r0
 	pop {r0 - r3, r12}
 	blx r6
-	CHANGE_TO_SVC
 	ldmia sp!, {r0-r12,pc}^
 
 
