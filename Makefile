@@ -14,7 +14,9 @@ CC	=arm-linux-gnueabihf-gcc  $(RAMDISK)
 CFLAGS	=-Wall -nostdlib -g -nostdinc -fomit-frame-pointer
 # CFLAGS += -fomit-frame-pointer -fno-stack-protector 
 
-CPP	=arm-linux-gnueabihf-cpp -nostdinc -Iinclude -lgcc -L/usr/lib/gcc-cross/arm-linux-gnueabihf/12 -g
+GNUEABIHF_VERSION = $(shell arm-linux-gnueabihf-gcc -dumpversion)
+
+CPP	=arm-linux-gnueabihf-cpp -nostdinc -Iinclude -lgcc -L/usr/lib/gcc-cross/arm-linux-gnueabihf/$(GNUEABIHF_VERSION) -g
 
 #
 # ROOT_DEV specifies the default root-device when making the image.
@@ -59,7 +61,7 @@ tools/system:	 init/main.o boot/start.o \
 	$(DRIVERS) \
 	$(MATH) \
 	$(LIBS) \
-	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/12 
+	-o tools/system -lgcc -L /usr/lib/gcc-cross/arm-linux-gnueabihf/$(GNUEABIHF_VERSION)
 	$(NM) -n tools/system > System.map
 
 kernel/math/math.a:
@@ -108,6 +110,10 @@ qemu: all
 		-kernel Image \
 		-serial mon:stdio \
 		-append "console=ttyAMA1 root=/dev/vda rw"
+
+gdb: all
+	gdb-multiarch -x init.gdb
+
 qemugdb: all
 	qemu-system-arm \
 		-machine virt,gic-version=3 \
@@ -118,6 +124,12 @@ qemugdb: all
 		-serial mon:stdio \
 		-append "console=ttyAMA1 root=/dev/vda rw" \
 		-s -S
+
+tmux:
+	tmux new-session -d -s Linux_ARM -n qemu 'make qemugdb'
+	tmux new-window -t Linux_ARM:2 -n gdb 'make gdb'
+	tmux attach -t Linux_ARM
+
 dtc:    
 	dtc -o qemu.dts -O dts -I dtb qemu.dtb
 		# -machine dumpdtb=qemu.dtb 
