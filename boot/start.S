@@ -94,8 +94,10 @@ Reset_Handler:
 	orr r0, r0, #0x1f 	/* r0或上0x13,表示使用SYS模式					*/
 	msr cpsr, r0		/* 将r0 的数据写入到cpsr_c中 					*/
 	
+	/*
 	add r6, r6, #0X1000	
 	mov sp, r6
+	*/
 
 
 	cpsie i				/* 打开全局中断 */
@@ -136,6 +138,13 @@ Reset_Handler:
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
+   @ Main memory
+   ldr r0,=0x00100000			@ 1MB
+   ldr r1,=0x01000000			@ 16MB
+   ldr r2,=0x80100000
+   ldr r3,=0x0
+   bl  create_page_table               @ 设置页表
+
 __turn_mmu_on:
    bl  mmu_init                        @ 启动MMU
 __turn_mmu_on_end:
@@ -161,7 +170,7 @@ __turn_mmu_on_end:
 	/* 进入SYS模式 */
 	CHANGE_TO_SYS
 	and r6, r8
-	add r6, r6, #0X1000	
+	// add r6, r6, #0X1000	
 	mov sp, r6
 
     cpsie i				/* 打开全局中断 */

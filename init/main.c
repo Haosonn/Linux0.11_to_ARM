@@ -157,9 +157,32 @@ int main(void)
 	uart_init();				/* 初始化串口，波特率115200 */
 	mem_init(main_memory_start, memory_end);	/* 初始化内存管理 */
 	breakpoint();
+
+	// memory init
+	memory_end = 15 << 20; // 15MB 内存
+	main_memory_start = 4 << 20; // 4MB 缓冲区，不太清楚作用
+	mem_init(main_memory_start, memory_end);
+	// test
+	memory_test();
+
+	printk("a=%d, b=%d, a+b=%d\n", a, b, temp_add(a, b));
+
+	while(1);
+
 	return 0;
 }
 
+int temp_add(int a, int b)
+{
+     int sum;
+     __asm__ volatile (
+             "add %0, %1, %2"
+             :"=r"(sum)
+             :"r"(a), "r"(b)
+             :"cc"
+     );
+     return sum;
+}
 
 // 内核初始化主程序。初始化结束后将以任务0（idle任务即空闲任务）的身份运行。
 void main_1(void)		/* This really IS void, no error here. */

@@ -68,8 +68,30 @@ current->start_code + current->end_code)
 
 static long HIGH_MEMORY = 0;            // 全局变量，存放实际物理内存最高端地址
 
+// TODO
 // 从from处复制1页内存到to处(4K字节)。
-#define copy_page(from,to) 
+void copy_page(unsigned int from, unsigned int to) {
+    __asm__ volatile(
+        /* ASSEMBLY CODES */
+        "mov r0, %0\n"
+        "mov r1, %1\n"
+        "ldr r2, =0\n"
+        "ldr r3, =4096\n"
+        "copy_page_loop:\n"
+        "cmp r2, r3\n"
+        "beq copy_page_loop_exit\n"
+        "ldr r4, [r0, r2]\n"
+        "str r4, [r1, r2]\n"
+        "add r2, #4\n"
+        "b copy_page_loop\n"
+        "copy_page_loop_exit:\n"
+        :/* OUTPUTS: NOTHING */
+        :/* INPUTS */
+        "r"(from), "r"(to)
+        :/* MODIFIED REGISTERS */
+        "r0", "r1", "r2", "r3", "r4", "cc", "memory"
+    );
+}
 
 // 物理内存映射字节图（1字节代表1页内存）。每个页面对应的字节用于标志页面当前引
 // 用（占用）次数。它最大可以映射15MB的内存空间。在初始化函数mem_init()中，对于
@@ -92,9 +114,58 @@ static unsigned char mem_map [ PAGING_PAGES ] = {0,};
 // 因为内核代码和数据空间（16MB）已经对等地映射到物理地址空间。
 unsigned long get_free_page(void)
 {
-    //TODO 
-    //NEEDED IMPLEMENT
-    return 1;           // 返回空闲物理页面地址(若无空闲页面则返回0).
+    // TODO
+    unsigned long ret = 0;
+    __asm__ volatile (
+        /* ASSEMBLY CODES */
+
+            /* begin */
+        "mov r4, #0\n"
+        "mov r0, %1\n"
+        "mov r1, %2\n"
+        "get_free_page_loop:\n"
+
+            /* judge */
+        "ldrb r2, [r0]\n"
+        "cmp r2, #0\n"
+        "bne get_free_page_judge_failed\n"  // mem_map != 0, judge failed
+        "mov r3, #1 \n"
+        "strb r3, [r0]\n"  // set mem_map[r0] to 1
+        "mov r4, r1, LSL #12\n"
+        "add r4, %3\n"  // set result to (r1 << 12) + LOW_MEM
+        "mov r3, #4092\n"
+        "mov r0, #0\n"
+        "clear_loop:\n"  // clear [add+0, add+4096)
+        "str r0, [r4, r3]\n"
+        "add r3, #-4\n"
+        "cmp r3, #-4\n"
+        "bne clear_loop\n"
+        
+        "b get_free_page_loop_exit\n"
+
+            /* judge failed, next turn */
+        "get_free_page_judge_failed:\n"
+        "cmp r1, #0\n"
+        "beq get_free_page_loop_exit\n"  // if id == 0, end
+        "add r0, #-1\n"
+        "add r1, #-1\n"
+        "b get_free_page_loop\n"
+
+            /* exit */
+        "get_free_page_loop_exit:\n"
+        "mov %0, r4\n"
+
+        :/* OUTPUTS */
+        "r="(ret)                       // %0 = result
+        :/* INPUTS */
+        "r"(mem_map+PAGING_PAGES-1),    // %1 = mem_map addr of last page
+        "r"(PAGING_PAGES-1),            // %2 = id of last page
+        "r"(LOW_MEM)                    // %3 = LOW_MEM
+        :/* MODIFIED REGISTERS */
+        "r0", "r1", "r2", "r3", "r4", "cc", "memory"
+    );
+    printk("get_free_page: get %d\n", ret);
+    return ret;
 }
 
 /*
@@ -678,7 +749,6 @@ void do_no_page(unsigned long error_code,unsigned long address)
 void mem_init(long start_mem, long end_mem)
 {
 	int i;
-
     // 首先将1MB到16MB范围内所有内存页面对应的内存映射字节数组项置为已占用状态，
     // 即各项字节全部设置成USED(100)。PAGING_PAGES被定义为(PAGING_MEMORY>>12)，
     // 即1MB以上所有物理内存分页后的内存页面数(15MB/4KB = 3840).
@@ -693,6 +763,7 @@ void mem_init(long start_mem, long end_mem)
 	end_mem >>= 12;             // 主内存区中的总页面数
 	while (end_mem-->0)
 		mem_map[i++]=0;         // 主内存区页面对应字节值清零
+    return;
 }
 
 //// 计算内存空闲页面数并显示
@@ -829,4 +900,34 @@ __asm__(
     "mcr    p15, 0, r0, c1, c0, 0\n"    /* 将修改的值写入控制寄存器 */
     : /* 无输出 */
     : "r" (ttb) );
+}
+
+
+// ONLY FOR TESTING IN OUT PROJECT
+void memory_test() {
+    printk("memory_test: begin to test get_free_page\n");
+    int* a = (int*)malloc(100 * sizeof (int));
+    printk("memory_test: malloc success: %p\n", a);
+    for(int i = 1; i < 50; ++i)
+        a[i] = i;
+    int sum = 0;
+    for(int i = 1; i < 50; ++i)
+        sum += a[i];
+    printk("memory_test: sum = %d\n", sum);
+    free(a);
+    int *b = (int *)malloc(100 * sizeof (int));
+    printk("memory_test: malloc success: %p\n", b);
+    printk("memory_test: (This two addresses are excepted to be the same.)\n");
+    free(b);
+    printk("memory_test: begin to test copy_page\n");
+    unsigned long* pageA = get_free_page();
+    unsigned long* pageB = get_free_page();
+    *(pageA + 8) = 233;
+    printk("memory_test: shoule be 233: (%d)\n", *(pageA + 8));
+    copy_page(pageA, pageB);
+    printk("memory_test: shoule be 233: (%d)\n", *(pageB + 8));
+    free_page(pageA);
+    free_page(pageB);
+    int *c = (int *)malloc(1024* sizeof (int));
+    free(c);
 }
