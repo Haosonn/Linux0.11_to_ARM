@@ -27,16 +27,6 @@ void int_init(void)
 	GIC_Init(); 						/* 初始化GIC 							*/
 	system_irqtable_init();				/* 初始化中断表 							*/
     __set_VBAR((uint32_t)0x40010000); 	/* 中断向量表偏移，偏移到起始地址   				*/
-	long __res; 
-	int a = 1;
-	int b = 0;
-	int c = a / b;
-	// asm volatile ("cpsie if");
-	// asm volatile ("mov r7, %1\n" 
-	// 		  "swi 0x0" 
-	// 		  :"=r" (__res) 
-	// 		  :"0" (1) 
-	// 		  : "r0","r1","r2","r7","lr"); 
 }
 
 /*

@@ -7,3 +7,6 @@
 /tags
 Image
 System*
+tools/System
+.gitignore
+Makefile
