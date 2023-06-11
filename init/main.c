@@ -140,9 +140,9 @@ static void time_init(void)
 }
 
 // 下面定义一些局部变量
-static long memory_end = 0;                     // 机器具有的物理内存容量（字节数）
+static long memory_end = 0x41000000;                     // 机器具有的物理内存容量（字节数）
 static long buffer_memory_end = 0;              // 高速缓冲区末端地址
-static long main_memory_start = 0;              // 主内存（将用于分页）开始的位置
+static long main_memory_start = 0x40100000;              // 主内存（将用于分页）开始的位置
 
 struct drive_info { char dummy[32]; } drive_info;  // 用于存放硬盘参数表信息
 
@@ -155,6 +155,7 @@ int main(void)
 	int a=2 , b=10;
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	uart_init();				/* 初始化串口，波特率115200 */
+	mem_init(main_memory_start, memory_end);	/* 初始化内存管理 */
 	breakpoint();
 	return 0;
 }
@@ -203,7 +204,7 @@ void main_1(void)		/* This really IS void, no error here. */
 	floppy_init();                          // 软驱初始化，kernel/blk_drv/floppy.c
 	sti();                                  // 所有初始化工作都做完了，开启中断
     // 下面过程通过在堆栈中设置的参数，利用中断返回指令启动任务0执行。
-//	move_to_user_mode();                    // 移到用户模式下执行
+	// move_to_user_mode();                    // 移到用户模式下执行
 	if (!fork()) {		/* we count on this going ok */
 		init();                             // 在新建的子进程(任务1)中执行。
 	}

@@ -192,5 +192,5 @@ void do_reserved(long esp, long error_code)
 // 这两个函数均是嵌入式汇编宏程序(include/asm/system.h中)
 void trap_init(void)
 {
-
+	//TODO: trap_init
 }
