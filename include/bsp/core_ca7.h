@@ -74,6 +74,14 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPEXC(uint32_t fpe
   __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc));
 }
 
+__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_CNTPCT(void)
+{
+  uint32_t low;
+  uint32_t high;
+  __ASM volatile ("MRRC p15, 0, %0, %1, c14" : "=r" (low), "=r" (high) );
+  return low;
+}
+
 
 /*******************************************************************************
  *        		一些内核寄存器定义和抽象
@@ -728,5 +736,10 @@ FORCEDINLINE __STATIC_INLINE uint32_t GIC_GetPriority(IRQn_Type IRQn)
   return(((uint32_t)gic->D_IPRIORITYR[((uint32_t)(int32_t)IRQn)] >> (8UL - __GIC_PRIO_BITS)));
 }
 
+FORCEDINLINE __STATIC_INLINE void GIC_SoftInt(uint32_t IRQn)
+{
+  GIC_Type *gic = (GIC_Type *)(__get_CBAR() & 0xFFFF0000UL);
+  gic->D_SGIR = (uint32_t)IRQn;
+}
 
 #endif 
