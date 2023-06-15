@@ -199,12 +199,12 @@ int main(void)
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	uart_init();				/* 初始化串口，波特率115200 */
 	printk("gg\n");
-	mem_init(main_memory_start, memory_end);	/* 初始化内存管理 */
 
 	// memory init
 	memory_end = 15 << 20; // 15MB 内存
 	main_memory_start = 4 << 20; // 4MB 缓冲区，不太清楚作用
 	mem_init(main_memory_start, memory_end);
+	
 	breakpoint();
 	sched_init();
 	printk("gg\n");
@@ -213,7 +213,7 @@ int main(void)
 	sti();
 	printk("gg\n");
 
-	while(1);
+	while(1)
 		check();
 
 	return 0;

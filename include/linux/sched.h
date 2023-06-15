@@ -79,6 +79,11 @@ struct tss_struct {
 };
 
 struct cpu_context_struct {
+	u32 spsr;
+	u32 r0;
+	u32 r1;
+	u32 r2;
+	u32 r3;
 	u32 r4;
 	u32 r5;
 	u32 r6;
@@ -88,9 +93,9 @@ struct cpu_context_struct {
 	u32 r10;
 	u32 r11;
 	u32 r12;
+	u32 pc;
 	u32 sp;
 	u32 lr;
-	u32 cpsr;
 };
 
 struct task_struct {
@@ -187,35 +192,125 @@ extern void wake_up(struct task_struct ** p);
  * This also clears the TS-flag if the task we switched to has used
  * tha math co-processor latest.
  */
-// #define switch_to(n)
 #define switch_to(n) { \
 	__asm__ volatile( \
 		"ldr r0, %0\n\t" \
-		"stmia r0, {r4-r12}\n\t" \
-		"add r0, 36\n\t" \
-		"str sp, [r0]\n\t" \
-		"add r0, 4\n\t" \
-		"str lr, [r0]\n\t" \
-		"mrs r1, cpsr\n\t" \
-		"add r0, 4\n\t" \
-     	"str r1, [r0]\n\t" \
-		"ldr r0, %1\n\t" \
-		"add r0, 48\n\t" \
-		"ldr r1, [r0]\n\t" \
-		"msr cpsr, r1\n\t" \
-		"ldr r0, %1\n\t" \
-		"ldmia r0, {r4-r12}\n\t" \
-		"add r0, 36\n\t" \
-		"ldr sp, [r0]\n\t" \
-		"add r0, 4\n\t" \
-		"ldr lr, [r0]\n\t" \
-		"mrs r1, cpsr\n\t" \
+		"mov r1, r6\n\t" \
+		"ldr r2, [r1]\n\t" \
+		"str r2, [r0]\n\t" \
+		"ldr r2, [r1,#0x4]\n\t" \
+		"str r2, [r0,#0x4]\n\t" \
+		"ldr r2, [r1,#0x8]\n\t" \
+		"str r2, [r0,#0x8]\n\t" \
+		"ldr r2, [r1,#0xC]\n\t" \
+		"str r2, [r0,#0xC]\n\t" \
+		"ldr r2, [r1,#0x10]\n\t" \
+		"str r2, [r0,#0x10]\n\t" \
+		"ldr r2, [r1,#0x14]\n\t" \
+		"str r2, [r0,#0x14]\n\t" \
+		"ldr r2, [r1,#0x18]\n\t" \
+		"str r2, [r0,#0x18]\n\t" \
+		"ldr r2, [r1,#0x1C]\n\t" \
+		"str r2, [r0,#0x1C]\n\t" \
+		"ldr r2, [r1,#0x20]\n\t" \
+		"str r2, [r0,#0x20]\n\t" \
+		"ldr r2, [r1,#0x24]\n\t" \
+		"str r2, [r0,#0x24]\n\t" \
+		"ldr r2, [r1,#0x28]\n\t" \
+		"str r2, [r0,#0x28]\n\t" \
+		"ldr r2, [r1,#0x2C]\n\t" \
+		"str r2, [r0,#0x2C]\n\t" \
+		"ldr r2, [r1,#0x30]\n\t" \
+		"str r2, [r0,#0x30]\n\t" \
+		"ldr r2, [r1,#0x34]\n\t" \
+		"str r2, [r0,#0x34]\n\t" \
+		"ldr r2, [r1,#0x38]\n\t" \
+		"str r2, [r0,#0x38]\n\t" \
+		"ldr r3, =#0x10\n\t" \
+		"msr cpsr_c, r3\n\t" \
+		"mov r2, sp\n\t" \
+		"str r2, [r0,#0x3C]\n\t" \
+		"mov r2, lr\n\t" \
+		"ldr r3, =#0x12\n\t" \
+		"msr cpsr_c, r3\n\t" \
+		"str r2, [r0,#0x40]\n\t" \
+		"mov r0, r6\n\t" \
+		"ldr r1, %1\n\t" \
+		"ldr r2, [r1]\n\t" \
+		"str r2, [r0]\n\t" \
+		"ldr r2, [r1,#0x4]\n\t" \
+		"str r2, [r0,#0x4]\n\t" \
+		"ldr r2, [r1,#0x8]\n\t" \
+		"str r2, [r0,#0x8]\n\t" \
+		"ldr r2, [r1,#0xC]\n\t" \
+		"str r2, [r0,#0xC]\n\t" \
+		"ldr r2, [r1,#0x10]\n\t" \
+		"str r2, [r0,#0x10]\n\t" \
+		"ldr r2, [r1,#0x14]\n\t" \
+		"str r2, [r0,#0x14]\n\t" \
+		"ldr r2, [r1,#0x18]\n\t" \
+		"str r2, [r0,#0x18]\n\t" \
+		"ldr r2, [r1,#0x1C]\n\t" \
+		"str r2, [r0,#0x1C]\n\t" \
+		"ldr r2, [r1,#0x20]\n\t" \
+		"str r2, [r0,#0x20]\n\t" \
+		"ldr r2, [r1,#0x24]\n\t" \
+		"str r2, [r0,#0x24]\n\t" \
+		"ldr r2, [r1,#0x28]\n\t" \
+		"str r2, [r0,#0x28]\n\t" \
+		"ldr r2, [r1,#0x2C]\n\t" \
+		"str r2, [r0,#0x2C]\n\t" \
+		"ldr r2, [r1,#0x30]\n\t" \
+		"str r2, [r0,#0x30]\n\t" \
+		"ldr r2, [r1,#0x34]\n\t" \
+		"str r2, [r0,#0x34]\n\t" \
+		"ldr r2, [r1,#0x38]\n\t" \
+		"str r2, [r0,#0x38]\n\t" \
+		"ldr r3, =#0x10\n\t" \
+		"msr cpsr_c, r3\n\t" \
+		"ldr r2, [r1,#0x3C]\n\t" \
+		"mov sp, r2\n\t" \
+		"ldr r2, [r1,#0x40]\n\t" \
+		"mov lr, r2\n\t" \
+		"ldr r3, =#0x12\n\t" \
+		"msr cpsr_c, r3\n\t" \
 		: "=m"(current->cpu_context) \
 		: "m"(task[n]->cpu_context) \
 		: \
-		"r0", "r1", "cc", "memory" \
+		"r0", "r1", "r2", "memory" \
 	); \
 }
+
+
+
+// #define switch_to(n) { \
+// 	__asm__ volatile( \
+// 		"ldr r0, %0\n\t" \
+// 		"stmia r0, {r4-r12}\n\t" \
+// 		"add r0, 36\n\t" \
+// 		"str sp, [r0]\n\t" \
+// 		"add r0, 4\n\t" \
+// 		"str lr, [r0]\n\t" \
+// 		"mrs r1, cpsr\n\t" \
+// 		"add r0, 4\n\t" \
+//      	"str r1, [r0]\n\t" \
+// 		"ldr r0, %1\n\t" \
+// 		"add r0, 48\n\t" \
+// 		"ldr r1, [r0]\n\t" \
+// 		"msr cpsr, r1\n\t" \
+// 		"ldr r0, %1\n\t" \
+// 		"ldmia r0, {r4-r12}\n\t" \
+// 		"add r0, 36\n\t" \
+// 		"ldr sp, [r0]\n\t" \
+// 		"add r0, 4\n\t" \
+// 		"ldr lr, [r0]\n\t" \
+// 		"mrs r1, cpsr\n\t" \
+// 		: "=m"(current->cpu_context) \
+// 		: "m"(task[n]->cpu_context) \
+// 		: \
+// 		"r0", "r1", "cc", "memory" \
+// 	); \
+// }
 // #define switch_to(n) {\
 // struct {long a,b;} __tmp; \
 // __asm__("cmpl %%ecx,current\n\t" \

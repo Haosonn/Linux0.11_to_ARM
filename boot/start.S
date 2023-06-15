@@ -66,7 +66,6 @@ stack_top:
 /* 复位中断 */	
 Reset_Handler:
 	cpsid i						/* 关闭全局中断 */
-
 	/* 关闭I,DCache和MMU 
 	 * 采取读-改-写的方式。
 	 */
@@ -103,8 +102,7 @@ Reset_Handler:
 	add r6, r6, #0X1000	
 	mov sp, r6
 	*/
-
-
+	
 	cpsie i				/* 打开全局中断 */
 
    @清除16kb页表地址
@@ -129,13 +127,6 @@ Reset_Handler:
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
-   @映射页表地址
-   ldr r0,=0x80004000
-   ldr r1,=0x80005000
-   ldr r2,=0x80004000
-   ldr r3,=0x0
-   bl  create_page_table               @ 设置页表
-
    @映射GIC
    ldr r0,=0x08000000
    ldr r1,=0x08200000
@@ -146,12 +137,12 @@ Reset_Handler:
    @ Main memory
    ldr r0,=0x00100000			@ 1MB
    ldr r1,=0x01000000			@ 16MB
-   ldr r2,=0x80100000
+   ldr r2,=0x40100000
    ldr r3,=0x0
    bl  create_page_table               @ 设置页表
 
 __turn_mmu_on:
-   bl  mmu_init                        @ 启动MMU
+    bl  mmu_init                        @ 启动MMU
 __turn_mmu_on_end:
      
    mov r7, #0x1000
@@ -230,16 +221,17 @@ NotUsed_Handler:
 IRQ_Handler:
 @	bl led_on
 	push {lr}					/* 保存lr地址 */
-	push {r0-r3, r12}			/* 保存r0-r3，r12寄存器 */
+	push {r0-r12}				/* 保存r0-r12寄存器 */
 
 	mrs r0, spsr				/* 读取spsr寄存器 */
 	push {r0}					/* 保存spsr寄存器 */
+	mov r6, sp
 	
 	mrc p15, 4, r3, c15, c0, 0 /* 从CP15的C0寄存器内的值到R1寄存器中
 								* 参考文档ARM Cortex-A(armV7)编程手册V4.0.pdf P49
 								* Cortex-A7 Technical ReferenceManua.pdf P68 P138
 								*/							
-	add r3, r3, #0X2000			/* GIC基地址加0X2000，也就是GIC的CPU接口端基地址 */
+	add r3, r3, #0X10000		/* GIC基地址加0X2000，也就是GIC的CPU接口端基地址 */
 	ldr r0, [r3, #0XC]			/* GIC的CPU接口端基地址加0X0C就是GICC_IAR寄存器，
 								 * GICC_IAR寄存器保存这当前发生中断的中断号，我们要根据
 								 * 这个中断号来绝对调用哪个中断服务函数
@@ -256,7 +248,7 @@ IRQ_Handler:
 	pop {r0}						
 	msr spsr_cxsf, r0			/* 恢复spsr */
 
-	pop {r0-r3, r12}			/* r0-r3,r12出栈 */
+	pop {r0-r12}				/* r0-r12出栈 */
 	pop {lr}					/* lr出栈 */
 	subs pc, lr, #4				/* 将lr-4赋给pc */
 

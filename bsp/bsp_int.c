@@ -26,27 +26,22 @@ extern void _start();
  */
 void int_init(void)
 {
-	uint32_t i;
-	uint32_t irqRegs;
+	int out;
 	GIC_Type *gic = (GIC_Type *)(__get_CBAR() & 0xFFFF0000UL);
-	__asm__(
-		"ldr r0, =#0x8000004\n\t"
-		"ldr r1, [r0]\n\t"
-		"mov %0, r1\n\t"
-		:"=r"(irqRegs)
-		:
-		:"r0","r1","memory"
-	);
-  	irqRegs = (gic->D_TYPER & 0x1FUL) + 1;
-	printk("address: %x\n",(int)gic);
-	printk("irqRegs: %x\n",(int)irqRegs);
-	printk("hh%x\n",gic->D_IIDR);
-	printk("aa: %x\n",gic->D_CTLR);
 	printk("address of gic->C_CTLR: %x\n",&gic->C_CTLR);
-	printk("gic->C_CTLR: %x\n",gic->C_CTLR);
+    __set_VBAR((uint32_t)_start); 	/* 中断向量表偏移，偏移到起始地址   				*/
+	__asm__(
+		// "mrs %0, cpsr\n\t"
+		"ldr r0, =#0x8010008\n\t"
+		"ldr %0,[r0,#0]\n\t"
+		:"=r"(out)
+		:
+		:"r0","memory"
+	);
+	printk("hh: %x\n",out);
+	// printk("gic->C_CTLR: %x\n",gic->C_CTLR);
 	GIC_Init(); 						/* 初始化GIC 							*/
 	system_irqtable_init();				/* 初始化中断表 							*/
-    __set_VBAR((uint32_t)_start); 	/* 中断向量表偏移，偏移到起始地址   				*/
 }
 
 /*
