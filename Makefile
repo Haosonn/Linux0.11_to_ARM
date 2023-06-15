@@ -103,7 +103,7 @@ boot/start:boot/start.S
 
 qemu: all
 	qemu-system-arm \
-		-machine virt,gic-version=3 \
+		-machine virt,gic-version=2 \
 		-m 3G \
 		-cpu cortex-a7 \
 		-nographic \

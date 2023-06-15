@@ -30,14 +30,13 @@ void int_init(void)
 	GIC_Type *gic = (GIC_Type *)(__get_CBAR() & 0xFFFF0000UL);
 	printk("address of gic->C_CTLR: %x\n",&gic->C_CTLR);
     __set_VBAR((uint32_t)_start); 	/* 中断向量表偏移，偏移到起始地址   				*/
-	__asm__(
-		// "mrs %0, cpsr\n\t"
-		"ldr r0, =#0x8010008\n\t"
-		"ldr %0,[r0,#0]\n\t"
-		:"=r"(out)
-		:
-		:"r0","memory"
-	);
+	// __asm__(
+	// 	"msr ICC_SRE, #1\n\t"
+	// 	"mrs %0, ICC_SRE\n\t"
+	// 	:"=r"(out)
+	// 	:
+	// 	:"r0","memory"
+	// );
 	printk("hh: %x\n",out);
 	// printk("gic->C_CTLR: %x\n",gic->C_CTLR);
 	GIC_Init(); 						/* 初始化GIC 							*/

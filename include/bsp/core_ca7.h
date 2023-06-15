@@ -570,7 +570,7 @@ typedef struct
   __IOM uint32_t D_CPENDSGIR[4];         /*!< Offset: 0xF10 - 0xF1C (R/W) Non-secure Access Control Registers */
   __IOM uint32_t D_SPENDSGIR[4];         /*!< Offset: 0xF20 - 0xF2C (R/W) Non-secure Access Control Registers */
         uint32_t RESERVED6[52];
-        uint32_t RESERVED7[15742];
+        uint32_t RESERVED7[15742/*+16384*9*/];
 
   __IOM uint32_t C_CTLR;                 /*!< Offset: 0x10000 (R/W) CPU Interface Control Register */
   __IOM uint32_t C_PMR;                  /*!< Offset: 0x10004 (R/W) Interrupt Priority Mask Register */
