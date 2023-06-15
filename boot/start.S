@@ -16,6 +16,7 @@ Copyright © laoyening Co., Ltd. 1998-2019. All rights reserved.
 .equ SWI_MOD,0x13
 .equ ABT_MOD,0x17
 .equ UND_MOD,0x1b
+.equ USR_MOD,0x10
 .equ MOD_MASK,0x1f
 
 .global _start  				/* 全局标号 */
@@ -30,6 +31,10 @@ Copyright © laoyening Co., Ltd. 1998-2019. All rights reserved.
 
 .macro CHANGE_TO_SYS
         msr     cpsr_c,#(SYS_MOD)
+.endm
+
+.macro CHANGE_TO_USR
+        msr     cpsr_c,#(USR_MOD)
 .endm
 
 

@@ -139,6 +139,47 @@ static void time_init(void)
 	startup_time = kernel_mktime(&time);        // 计算开机时间。kernel/mktime.c文件
 }
 
+void enable_Timer()
+{
+	int result,gg;
+	int res1,res2;
+	__asm__(
+		"ldr r0, =#0x18000\n\t"
+		"mcr p15, 0, r0, c14, c2, 0\n\t"
+		"mrc p15, 0, r0, c14, c2, 1\n\t"
+		"mov %[reg], r0\n\t"
+		"orr r0, #1\n\t"
+		"and r0, #0xfffffffd\n\t"
+		"mcr p15, 0, r0, c14, c2, 1\n\t"
+		"mrc p15, 0, %[gg], c14, c2, 1\n\t"
+		"mrc p15, 0, %[res1], c14, c2, 0\n\t"
+		"mrc p15, 0, %[res2], c14, c2, 0\n\t"
+		:[reg]"=r"(result), [res1]"=r"(res1), [res2]"=r"(res2), [gg]"=r"(gg)
+		:
+		:"r0"
+	);
+	printk("result: %d\n",result);
+	printk("gg: %d\n",gg);
+	printk("res1: %d\n",res1);
+	printk("res2: %d\n",res2);
+}
+
+void check()
+{
+	int result,cond;
+	__asm__(
+		"mrc p15, 0, %[reg], c14, c2, 0\n\t"
+		"mrc p15, 0, %[cond], c14, c2, 1\n\t"
+		:[reg]"=r"(result),[cond]"=r"(cond)
+		:
+		:"r0"
+	);
+	printk("result: %d\n",result);
+	printk("cond: %d\n",cond);
+	if(cond == 5)
+		while(1);
+}
+
 // 下面定义一些局部变量
 static long memory_end = 0x41000000;                     // 机器具有的物理内存容量（字节数）
 static long buffer_memory_end = 0;              // 高速缓冲区末端地址
@@ -149,25 +190,31 @@ struct drive_info { char dummy[32]; } drive_info;  // 用于存放硬盘参数�
 void breakpoint() {
 	int a = 0;
 }
+
 int main(void)
 {
 	unsigned char state = OFF;
 	int a=2 , b=10;
+	breakpoint();
     int_init(); 				/* 初始化中断(一定要最先调用！) */
 	uart_init();				/* 初始化串口，波特率115200 */
+	printk("gg\n");
 	mem_init(main_memory_start, memory_end);	/* 初始化内存管理 */
-	breakpoint();
 
 	// memory init
 	memory_end = 15 << 20; // 15MB 内存
 	main_memory_start = 4 << 20; // 4MB 缓冲区，不太清楚作用
 	mem_init(main_memory_start, memory_end);
-	// test
-	memory_test();
-
-	printk("a=%d, b=%d, a+b=%d\n", a, b, temp_add(a, b));
+	breakpoint();
+	sched_init();
+	printk("gg\n");
+	enable_Timer();
+	printk("gg\n");
+	sti();
+	printk("gg\n");
 
 	while(1);
+		check();
 
 	return 0;
 }

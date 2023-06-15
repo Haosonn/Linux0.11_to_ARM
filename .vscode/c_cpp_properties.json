@@ -20,7 +20,7 @@
                 "databaseFilename": ""
             },
             "implementationFileExtensions": [
-                ".c"
+                ".c",
                 ".h"
             ]
         }

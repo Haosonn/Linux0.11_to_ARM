@@ -17,6 +17,7 @@
 #include <asm/system.h>
 #include <asm/io.h>
 #include <asm/segment.h>
+#include <bsp/irq.h>
 
 #include <signal.h>
 
@@ -425,14 +426,15 @@ void add_timer(long jiffies, void (*fn)(void))
 // 对于一个进程由于执行时间片用完时，则进城任务切换。并执行一个计时更新工作。
 void do_timer(long cpl)
 {
-	extern int beepcount;               // 扬声器发声滴答数
-	extern void sysbeepstop(void);      // 关闭扬声器。
+	printk("Timer interrupt\n");
+	// extern int beepcount;               // 扬声器发声滴答数
+	// extern void sysbeepstop(void);      // 关闭扬声器。
 
     // 如果发声计数次数到，则关闭发声。(向0x61口发送命令，复位位0和1，位0
     // 控制8253计数器2的工作，位1控制扬声器)
-	if (beepcount)
-		if (!--beepcount)
-			sysbeepstop();
+	// if (beepcount)
+	// 	if (!--beepcount)
+	// 		sysbeepstop();
 
     // 如果当前特权级(cpl)为0，则将内核代码运行时间stime递增；
 	if (cpl)
@@ -443,26 +445,26 @@ void do_timer(long cpl)
     // 如果有定时器存在，则将链表第1个定时器的值减1.如果已等于0，则调用相应的
     // 处理程序，并将该处理程序指针置空。然后去掉该项定时器。next_timer是定时器
     // 链表的头指针。
-	if (next_timer) {
-		next_timer->jiffies--;
-		while (next_timer && next_timer->jiffies <= 0) {
-			void (*fn)(void);       // 这里插入了一个函数指针定义!!!! o(︶︿︶)o 
+	// if (next_timer) {
+	// 	next_timer->jiffies--;
+	// 	while (next_timer && next_timer->jiffies <= 0) {
+	// 		void (*fn)(void);       // 这里插入了一个函数指针定义!!!! o(︶︿︶)o 
 			
-			fn = next_timer->fn;
-			next_timer->fn = NULL;
-			next_timer = next_timer->next;
-			(fn)();                 // 调用处理函数
-		}
-	}
-    // 如果当前软盘控制器FDC的数字输出寄存器中马达启动位有置位的，则执行软盘定时程序
-	if (current_DOR & 0xf0)
-		do_floppy_timer();
+	// 		fn = next_timer->fn;
+	// 		next_timer->fn = NULL;
+	// 		next_timer = next_timer->next;
+	// 		(fn)();                 // 调用处理函数
+	// 	}
+	// }
+    // // 如果当前软盘控制器FDC的数字输出寄存器中马达启动位有置位的，则执行软盘定时程序
+	// if (current_DOR & 0xf0)
+	// 	do_floppy_timer();
     // 如果进程运行时间还没完，则退出。否则置当前任务计数值为0.并且若发生时钟中断
     // 正在内核代码中运行则返回，否则调用执行调度函数。
 	if ((--current->counter)>0) return;
 	current->counter=0;
 	if (!cpl) return;                       // 内核态程序不依赖counter值进行调度
-	schedule();
+	// schedule();
 }
 
 // 系统调用功能 - 设置报警定时时间值(秒)
@@ -525,9 +527,19 @@ int sys_nice(long increment)
 		current->priority -= increment;
 	return 0;
 }
-
 // 内核调度程序的初始化子程序
 void sched_init(void)
 {
-	
+	int i;
+	for(i=1;i<NR_TASKS;i++)
+		task[i]=NULL;
+	for(i=0;i<160;i++)
+		GIC_EnableIRQ((IRQn_Type)i);
+	GIC_EnableIRQ(SecurePhyTimer_IRQn);
+	__asm__ volatile(
+		"ldr sp,%0"
+		:
+		:"m"(stack_start)
+		:"sp", "memory"
+	);
 }

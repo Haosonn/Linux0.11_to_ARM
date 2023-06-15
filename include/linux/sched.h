@@ -11,6 +11,7 @@
 #include <linux/fs.h>
 #include <linux/mm.h>
 #include <signal.h>
+#include <bsp/virt.h>
 
 #if (NR_OPEN > 32)
 #error "Currently the close-on-exec-flags are in one word, max 32 files/proc"
@@ -77,6 +78,21 @@ struct tss_struct {
 	struct i387_struct i387;
 };
 
+struct cpu_context_struct {
+	u32 r4;
+	u32 r5;
+	u32 r6;
+	u32 r7;
+	u32 r8;
+	u32 r9;
+	u32 r10;
+	u32 r11;
+	u32 r12;
+	u32 sp;
+	u32 lr;
+	u32 cpsr;
+};
+
 struct task_struct {
 /* these are hardcoded - don't touch */
 	long state;	/* -1 unrunnable, 0 runnable, >0 stopped */
@@ -105,6 +121,7 @@ struct task_struct {
 /* ldt for this task 0 - zero 1 - cs 2 - ds&ss */
 	struct desc_struct ldt[3];
 /* tss for this task */
+	struct cpu_context_struct cpu_context;
 	struct tss_struct tss;
 };
 
@@ -170,7 +187,35 @@ extern void wake_up(struct task_struct ** p);
  * This also clears the TS-flag if the task we switched to has used
  * tha math co-processor latest.
  */
-#define switch_to(n)
+// #define switch_to(n)
+#define switch_to(n) { \
+	__asm__ volatile( \
+		"ldr r0, %0\n\t" \
+		"stmia r0, {r4-r12}\n\t" \
+		"add r0, 36\n\t" \
+		"str sp, [r0]\n\t" \
+		"add r0, 4\n\t" \
+		"str lr, [r0]\n\t" \
+		"mrs r1, cpsr\n\t" \
+		"add r0, 4\n\t" \
+     	"str r1, [r0]\n\t" \
+		"ldr r0, %1\n\t" \
+		"add r0, 48\n\t" \
+		"ldr r1, [r0]\n\t" \
+		"msr cpsr, r1\n\t" \
+		"ldr r0, %1\n\t" \
+		"ldmia r0, {r4-r12}\n\t" \
+		"add r0, 36\n\t" \
+		"ldr sp, [r0]\n\t" \
+		"add r0, 4\n\t" \
+		"ldr lr, [r0]\n\t" \
+		"mrs r1, cpsr\n\t" \
+		: "=m"(current->cpu_context) \
+		: "m"(task[n]->cpu_context) \
+		: \
+		"r0", "r1", "cc", "memory" \
+	); \
+}
 // #define switch_to(n) {\
 // struct {long a,b;} __tmp; \
 // __asm__("cmpl %%ecx,current\n\t" \

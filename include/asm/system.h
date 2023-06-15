@@ -15,8 +15,8 @@ __asm__ ("movl %%esp,%%eax\n\t" \
 	:::"ax")
 #endif
 
-#define sti() 
-#define cli() 
+#define sti() __asm__ ("cpsie if"::)
+#define cli()  __asm__ ("cpsid if"::)
 #define nop() 
 #define iret() 
 
