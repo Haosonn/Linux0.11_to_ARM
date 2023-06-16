@@ -8,5 +8,5 @@ symbol-file tools/system
 layout asm
 layout split
 list
-b __divsi3
+b sched_init
 b breakpoint
