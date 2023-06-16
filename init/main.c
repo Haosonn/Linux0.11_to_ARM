@@ -205,6 +205,7 @@ int main(void)
 	sti();
 
 	fork();
+	printk("aowu\n");
 
 	// __asm__(
 	// 	"ldr r7, =#2\n\t"

@@ -28,6 +28,7 @@
 #endif
 
 extern int copy_page_tables(unsigned long from, unsigned long to, long size);
+extern void copy_page(unsigned int from, unsigned int to);
 extern int free_page_tables(unsigned long from, unsigned long size);
 
 extern void sched_init(void);

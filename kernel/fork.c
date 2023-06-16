@@ -20,15 +20,13 @@
 
 int sys_fork()
 {
-	int i;
-	for(i=0;i<NR_TASKS;i++){
-		if(!task[i]){
-			copy_process(i, current->cpu_context);
-			copy_mem(task[i]);
-			return task[i]->pid;
-		}
-	}
-	return 0;
+	int nr=find_empty_process();
+	if(nr == -EAGAIN)
+		return 0;
+	copy_process(nr, current->cpu_context);
+	copy_mem(task[nr]);
+	printk("pid: %d\n",task[nr]->pid);
+	return task[nr]->pid;
 };
 
 int sys_execve()
@@ -100,11 +98,7 @@ int copy_mem(struct task_struct * p)
 	new_base=get_free_page();
 	p->start_code = new_base;
 	set_base(p->base,new_base);
-	if (copy_page_tables(old_base,new_base,limit)) {
-		printk("free_page_tables: from copy_mem\n");
-		free_page_tables(new_base,limit);
-		return -ENOMEM;
-	}
+	copy_page(old_base,new_base);
 	return 0;
 }
 
