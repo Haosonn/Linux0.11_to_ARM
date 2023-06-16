@@ -102,7 +102,7 @@ Reset_Handler:
 	add r6, r6, #0X1000	
 	mov sp, r6
 	*/
-	
+
 	cpsie i				/* 打开全局中断 */
 
    @清除16kb页表地址
@@ -188,16 +188,21 @@ Undefined_Handler:
 
 /* SWI中断 */
 SWI_Handler:
-	stmdb sp!, {r0-r12,lr}
-	CHANGE_TO_SYS
-	push {r0 - r3, r12}
+	push {lr}
+	push {r0-r12}
+	mrs r0, spsr
+	push {r0}
+	mov r6, sp
 	and r0, r7, #0xff
-	bl  system_call
-	mov r6,r0
-	pop {r0 - r3, r12}
-	blx r6
-	ldmia sp!, {r0-r12,pc}^
-
+	ldr r7,=system_call
+	blx r7
+	mov r7,r0
+	blx r7
+	pop {r0}
+	msr spsr_cxsf, r0
+	pop {r0-r12}
+	pop	{lr}
+	subs pc, lr, #4
 
 	
 

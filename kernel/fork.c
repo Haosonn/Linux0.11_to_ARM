@@ -19,6 +19,15 @@
 
 int sys_fork()
 {
+	printk("fork_gg\n");
+	int out;
+	__asm__(
+		"mrs %0,cpsr"
+		:"=r"(out)
+		:
+		:"cc"
+	);
+	printk("out: %x\n",out);
 };
 
 int sys_execve()

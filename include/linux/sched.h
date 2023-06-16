@@ -34,6 +34,7 @@ extern void sched_init(void);
 void timer_irqhandler(unsigned int giccIar, void *userParam);
 extern void schedule(void);
 extern void trap_init(void);
+extern void update_current(void);
 #ifndef PANIC
 volatile void panic(const char * str);
 #endif
@@ -228,14 +229,14 @@ extern void wake_up(struct task_struct ** p);
 		"str r2, [r0,#0x34]\n\t" \
 		"ldr r2, [r1,#0x38]\n\t" \
 		"str r2, [r0,#0x38]\n\t" \
-		"ldr r3, =#0x10\n\t" \
+		"ldr r3, =#0x1f\n\t" \
 		"msr cpsr_c, r3\n\t" \
 		"mov r2, sp\n\t" \
 		"str r2, [r0,#0x3C]\n\t" \
 		"mov r2, lr\n\t" \
+		"str r2, [r0,#0x40]\n\t" \
 		"ldr r3, =#0x12\n\t" \
 		"msr cpsr_c, r3\n\t" \
-		"str r2, [r0,#0x40]\n\t" \
 		"mov r0, r6\n\t" \
 		"ldr r1, %1\n\t" \
 		"ldr r2, [r1]\n\t" \
@@ -268,7 +269,7 @@ extern void wake_up(struct task_struct ** p);
 		"str r2, [r0,#0x34]\n\t" \
 		"ldr r2, [r1,#0x38]\n\t" \
 		"str r2, [r0,#0x38]\n\t" \
-		"ldr r3, =#0x10\n\t" \
+		"ldr r3, =#0x1f\n\t" \
 		"msr cpsr_c, r3\n\t" \
 		"ldr r2, [r1,#0x3C]\n\t" \
 		"mov sp, r2\n\t" \
@@ -279,7 +280,7 @@ extern void wake_up(struct task_struct ** p);
 		: "=m"(current->cpu_context) \
 		: "m"(task[n]->cpu_context) \
 		: \
-		"r0", "r1", "r2", "memory" \
+		"r0", "r1", "r2", "r3", "memory" \
 	); \
 }
 

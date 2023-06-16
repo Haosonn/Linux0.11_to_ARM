@@ -204,6 +204,16 @@ int main(void)
 	enable_Timer();
 	sti();
 
+	fork();
+
+	// __asm__(
+	// 	"ldr r7, =#2\n\t"
+	// 	"swi 2\n\t"
+	// 	:
+	// 	:
+	// 	:"r7"
+	// );
+
 	while(1)
 		check();
 

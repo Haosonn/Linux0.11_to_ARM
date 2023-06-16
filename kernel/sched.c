@@ -90,9 +90,9 @@ struct task_struct * task[NR_TASKS] = {&(init_task.task), }; // 定义任务指�
 // 户态栈。下面结构用于设置堆栈ss:esp(数据的选择符，指针)。ss被设置为内核数据段
 // 选择符(0x10),指针esp指在user_stack数组最后一项后面。这是因为Intel CPU执行堆栈操作
 // 时是先递减堆栈指针sp值，然后在sp指针处保存入栈内容。
-long user_stack [ PAGE_SIZE>>2 ] ;
+long user_stack[ PAGE_SIZE>>2 ] ;
 
-uint32_t stack_start = (uint32_t)&user_stack [PAGE_SIZE>>2];
+uint32_t stack_start = &(user_stack[PAGE_SIZE>>2]);
 /*
  *  'math_state_restore()' saves the current math information in the
  * old math state array, and gets the new ones from the current task
@@ -165,7 +165,7 @@ void schedule(void)
 				(*p)->counter = ((*p)->counter >> 1) + (*p)->priority;
 			}
 	}
-	while(1);
+	// while(1);
     // 用下面的宏把当前任务指针current指向任务号Next的任务，并切换到该任务中运行。上面Next
     // 被初始化为0。此时任务0仅执行pause()系统调用，并又会调用本函数。
 	if(current != task[next])
@@ -526,6 +526,54 @@ void sched_init(void)
 void timer_irqhandler(unsigned int giccIar, void *userParam) 
 {
 	printk("timer_irqhandler\n");
-	if(giccIar == 30)
-		do_timer(3);
+	do_timer(3);
+}
+
+void update_current()
+{
+	__asm__(
+		"ldr r0, %0\n\t" \
+		"mov r1, r6\n\t" \
+		"ldr r2, [r1]\n\t" \
+		"str r2, [r0]\n\t" \
+		"ldr r2, [r1,#0x4]\n\t" \
+		"str r2, [r0,#0x4]\n\t" \
+		"ldr r2, [r1,#0x8]\n\t" \
+		"str r2, [r0,#0x8]\n\t" \
+		"ldr r2, [r1,#0xC]\n\t" \
+		"str r2, [r0,#0xC]\n\t" \
+		"ldr r2, [r1,#0x10]\n\t" \
+		"str r2, [r0,#0x10]\n\t" \
+		"ldr r2, [r1,#0x14]\n\t" \
+		"str r2, [r0,#0x14]\n\t" \
+		"ldr r2, [r1,#0x18]\n\t" \
+		"str r2, [r0,#0x18]\n\t" \
+		"ldr r2, [r1,#0x1C]\n\t" \
+		"str r2, [r0,#0x1C]\n\t" \
+		"ldr r2, [r1,#0x20]\n\t" \
+		"str r2, [r0,#0x20]\n\t" \
+		"ldr r2, [r1,#0x24]\n\t" \
+		"str r2, [r0,#0x24]\n\t" \
+		"ldr r2, [r1,#0x28]\n\t" \
+		"str r2, [r0,#0x28]\n\t" \
+		"ldr r2, [r1,#0x2C]\n\t" \
+		"str r2, [r0,#0x2C]\n\t" \
+		"ldr r2, [r1,#0x30]\n\t" \
+		"str r2, [r0,#0x30]\n\t" \
+		"ldr r2, [r1,#0x34]\n\t" \
+		"str r2, [r0,#0x34]\n\t" \
+		"ldr r2, [r1,#0x38]\n\t" \
+		"str r2, [r0,#0x38]\n\t" \
+		"ldr r3, =#0x1f\n\t" \
+		"msr cpsr_c, r3\n\t" \
+		"mov r2, sp\n\t" \
+		"str r2, [r0,#0x3C]\n\t" \
+		"mov r2, lr\n\t" \
+		"str r2, [r0,#0x40]\n\t" \
+		"ldr r3, =#0x13\n\t" \
+		"msr cpsr_c, r3\n\t" \
+		:"=m"(current->cpu_context)
+		:
+		:"r0", "r1", "r2", "r3", "memory"
+	);
 }

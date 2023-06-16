@@ -3,6 +3,7 @@ define hook-quit
 end
 
 target remote localhost:1234
+set disassemble-next-line on
 set architecture arm
 symbol-file tools/system
 layout asm
