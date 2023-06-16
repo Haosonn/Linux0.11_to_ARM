@@ -141,29 +141,25 @@ static void time_init(void)
 
 void enable_Timer()
 {
-	int result,gg;
-	int res1,res2;
+	uint32_t fre;
 	__asm__(
-		"ldr r0, =#0x18000\n\t"
-		"mcr p15, 0, r0, c14, c2, 0\n\t"
-		"mrc p15, 0, r0, c14, c2, 1\n\t"
-		"mov %[reg], r0\n\t"
-		"orr r0, #1\n\t"
-		"and r0, #0xfffffffd\n\t"
-		"mcr p15, 0, r0, c14, c2, 1\n\t"
-		"mrc p15, 0, %[gg], c14, c2, 1\n\t"
-		"mrc p15, 0, %[res1], c14, c2, 0\n\t"
-		"mrc p15, 0, %[res2], c14, c2, 0\n\t"
-		:[reg]"=r"(result), [res1]"=r"(res1), [res2]"=r"(res2), [gg]"=r"(gg)
+		"mrc p15, 0, %0, c14, c0, 0\n\t"
+		:"=r"(fre)
 		:
+		:
+	);
+	fre/=1000;
+	__asm__(
+		"mov r0, %0\n\t"
+		"mcr p15, 0, r0, c14, c2, 0\n\t"
+		"ldr r0	,=#0x1\n\t"
+		"mcr p15, 0, r0, c14, c2, 1\n\t"
+		:
+		:"r"(fre)
 		:"r0"
 	);
-	printk("result: %d\n",result);
-	printk("gg: %d\n",gg);
-	printk("res1: %d\n",res1);
-	printk("res2: %d\n",res2);
+	printk("out: %d\n",fre);
 }
-
 void check()
 {
 	int result,cond;
@@ -176,8 +172,6 @@ void check()
 	);
 	printk("result: %d\n",result);
 	printk("cond: %d\n",cond);
-	if(cond == 5)
-		while(1);
 }
 
 // 下面定义一些局部变量
@@ -207,11 +201,8 @@ int main(void)
 	
 	breakpoint();
 	sched_init();
-	printk("gg\n");
 	enable_Timer();
-	printk("gg\n");
 	sti();
-	printk("gg\n");
 
 	while(1)
 		check();

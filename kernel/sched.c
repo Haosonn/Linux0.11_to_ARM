@@ -92,10 +92,7 @@ struct task_struct * task[NR_TASKS] = {&(init_task.task), }; // 定义任务指�
 // 时是先递减堆栈指针sp值，然后在sp指针处保存入栈内容。
 long user_stack [ PAGE_SIZE>>2 ] ;
 
-struct {
-	long * a;
-	short b;
-	} stack_start = { & user_stack [PAGE_SIZE>>2] , 0x10 };
+uint32_t stack_start = (uint32_t)&user_stack [PAGE_SIZE>>2];
 /*
  *  'math_state_restore()' saves the current math information in the
  * old math state array, and gets the new ones from the current task
@@ -121,7 +118,6 @@ void schedule(void)
 {
 	int i,next,c;
 	struct task_struct ** p;
-
 /* check alarm, wake up any interruptible tasks that have got a signal */
 
     // 从任务数组中最后一个任务开始循环检测alarm。在循环时跳过空指针项。
@@ -165,12 +161,15 @@ void schedule(void)
 		if (c) break;
 		for(p = &LAST_TASK ; p > &FIRST_TASK ; --p)
 			if (*p)
-				(*p)->counter = ((*p)->counter >> 1) +
-						(*p)->priority;
+			{
+				(*p)->counter = ((*p)->counter >> 1) + (*p)->priority;
+			}
 	}
+	while(1);
     // 用下面的宏把当前任务指针current指向任务号Next的任务，并切换到该任务中运行。上面Next
     // 被初始化为0。此时任务0仅执行pause()系统调用，并又会调用本函数。
-	switch_to(next);     // 切换到Next任务并运行。
+	if(current != task[next])
+		switch_to(next);     // 切换到Next任务并运行。
 }
 
 // 转换当前任务状态为可中断的等待状态，并重新调度。
@@ -426,45 +425,30 @@ void add_timer(long jiffies, void (*fn)(void))
 // 对于一个进程由于执行时间片用完时，则进城任务切换。并执行一个计时更新工作。
 void do_timer(long cpl)
 {
-	printk("Timer interrupt\n");
-	// extern int beepcount;               // 扬声器发声滴答数
-	// extern void sysbeepstop(void);      // 关闭扬声器。
-
-    // 如果发声计数次数到，则关闭发声。(向0x61口发送命令，复位位0和1，位0
-    // 控制8253计数器2的工作，位1控制扬声器)
-	// if (beepcount)
-	// 	if (!--beepcount)
-	// 		sysbeepstop();
-
-    // 如果当前特权级(cpl)为0，则将内核代码运行时间stime递增；
 	if (cpl)
 		current->utime++;
 	else
 		current->stime++;
-
-    // 如果有定时器存在，则将链表第1个定时器的值减1.如果已等于0，则调用相应的
-    // 处理程序，并将该处理程序指针置空。然后去掉该项定时器。next_timer是定时器
-    // 链表的头指针。
-	// if (next_timer) {
-	// 	next_timer->jiffies--;
-	// 	while (next_timer && next_timer->jiffies <= 0) {
-	// 		void (*fn)(void);       // 这里插入了一个函数指针定义!!!! o(︶︿︶)o 
-			
-	// 		fn = next_timer->fn;
-	// 		next_timer->fn = NULL;
-	// 		next_timer = next_timer->next;
-	// 		(fn)();                 // 调用处理函数
-	// 	}
-	// }
-    // // 如果当前软盘控制器FDC的数字输出寄存器中马达启动位有置位的，则执行软盘定时程序
-	// if (current_DOR & 0xf0)
-	// 	do_floppy_timer();
-    // 如果进程运行时间还没完，则退出。否则置当前任务计数值为0.并且若发生时钟中断
-    // 正在内核代码中运行则返回，否则调用执行调度函数。
+	int cond0, cond1;
+	uint32_t fre;
+	__asm__(
+		"mrc p15, 0, %0, c14, c0, 0\n\t"
+		:"=r"(fre)
+		:
+		:
+	);
+	fre/=1000;
+	__asm__(
+		"mov r0, %0\n\t"
+		"mcr p15, 0, r0, c14, c2, 0\n\t"
+		:
+		:"r"(fre)
+		:"r0"
+	);
 	if ((--current->counter)>0) return;
 	current->counter=0;
 	if (!cpl) return;                       // 内核态程序不依赖counter值进行调度
-	// schedule();
+	schedule();
 }
 
 // 系统调用功能 - 设置报警定时时间值(秒)
@@ -533,13 +517,15 @@ void sched_init(void)
 	int i;
 	for(i=1;i<NR_TASKS;i++)
 		task[i]=NULL;
-	for(i=0;i<160;i++)
-		GIC_EnableIRQ((IRQn_Type)i);
-	GIC_EnableIRQ(SecurePhyTimer_IRQn);
-	__asm__ volatile(
-		"ldr sp,%0"
-		:
-		:"m"(stack_start)
-		:"sp", "memory"
-	);
+	system_register_irqhandler(NonSecurePhyTimer_IRQn, timer_irqhandler, NULL);
+	GIC_EnableIRQ(NonSecurePhyTimer_IRQn);
+	current=FIRST_TASK;
+	current->base = user_stack;
+}
+
+void timer_irqhandler(unsigned int giccIar, void *userParam) 
+{
+	printk("timer_irqhandler\n");
+	if(giccIar == 30)
+		do_timer(3);
 }

@@ -31,6 +31,7 @@ extern int copy_page_tables(unsigned long from, unsigned long to, long size);
 extern int free_page_tables(unsigned long from, unsigned long size);
 
 extern void sched_init(void);
+void timer_irqhandler(unsigned int giccIar, void *userParam);
 extern void schedule(void);
 extern void trap_init(void);
 #ifndef PANIC
@@ -126,6 +127,7 @@ struct task_struct {
 /* ldt for this task 0 - zero 1 - cs 2 - ds&ss */
 	struct desc_struct ldt[3];
 /* tss for this task */
+	unsigned long base;
 	struct cpu_context_struct cpu_context;
 	struct tss_struct tss;
 };
@@ -148,7 +150,7 @@ struct task_struct {
 		{0,0}, \
 /* ldt */	{0x9f,0xc0fa00}, \
 		{0x9f,0xc0f200}, \
-	}, \
+	}, 0,\
 }
 
 extern struct task_struct *task[NR_TASKS];

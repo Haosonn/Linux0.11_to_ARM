@@ -26,19 +26,7 @@ extern void _start();
  */
 void int_init(void)
 {
-	int out;
-	GIC_Type *gic = (GIC_Type *)(__get_CBAR() & 0xFFFF0000UL);
-	printk("address of gic->C_CTLR: %x\n",&gic->C_CTLR);
     __set_VBAR((uint32_t)_start); 	/* 中断向量表偏移，偏移到起始地址   				*/
-	// __asm__(
-	// 	"msr ICC_SRE, #1\n\t"
-	// 	"mrs %0, ICC_SRE\n\t"
-	// 	:"=r"(out)
-	// 	:
-	// 	:"r0","memory"
-	// );
-	printk("hh: %x\n",out);
-	// printk("gic->C_CTLR: %x\n",gic->C_CTLR);
 	GIC_Init(); 						/* 初始化GIC 							*/
 	system_irqtable_init();				/* 初始化中断表 							*/
 }
@@ -82,9 +70,7 @@ void system_register_irqhandler(IRQn_Type irq, system_irq_handler_t handler, voi
  * @return 				: 无
  */
 void system_irqhandler(unsigned int giccIar) 
-{
-   printk("\r\n system_irqhandler\r\n");
-   
+{  
    uint32_t intNum = giccIar & 0x3FFUL;
    
    /* 检查中断号是否符合要求 */
@@ -110,13 +96,10 @@ void system_irqhandler(unsigned int giccIar)
  */
 void default_irqhandler(unsigned int giccIar, void *userParam) 
 {
-	printk("default_irqhandler");
-	if(giccIar == 29)
-		do_timer(0);
+	printk("default_irqhandler\n");
 	while(1) 
   	{
    	}
 }
-
 
 
